@@ -15,13 +15,12 @@ const SkillBox = ({ skill: { title, description, icons } }: Props) => {
 
 	useEffect(() => {
 		setTimeout(() => {
-			console.log((currentIcon + 1) % icons.length);
 			setCurrentIcon((currentIcon + 1) % icons.length);
 		}, 2000);
 	});
 
 	return (
-		<div className="z-20 my-5 md:mx-auto flex-col flex sm:flex-row rounded-xl border-slate-600 shadow-lg border-[0.5px] p-5 w-full lg:w-[45%] min-w-1/2 justify-center align-middle lg:min-h-[40%] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 hover:bg-slate-700 duration-300 hover:cursor-pointer">
+		<div className="z-20 my-5 md:mx-auto flex-col flex sm:flex-row rounded-md border-green-900 hover:shadow-green-900 hover:shadow-[3px_3px_15px_-5px_#3FC280] border-[0.5px] p-5 w-full lg:w-[45%] min-w-1/2 justify-center align-middle lg:min-h-[40%] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 hover:cursor-pointer">
 			<Image
 				src={icons[currentIcon]}
 				alt="hehe"
