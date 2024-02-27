@@ -1,24 +1,24 @@
 import React from 'react'
 import SkillBox from './SkillBox/SkillBox';
-import WebIcon from '@/app/assets/images/Profile.svg';
-
-import ReactIcon from "@/app/assets/images/React.svg";
-import FlaskIcon from "@/app/assets/images/Flask.svg";
-import NodeIcon from "@/app/assets/images/Node.svg";
-import NextIcon from "@/app/assets/images/Next.svg";
-import JSIcon from "@/app/assets/images/JS.svg";
-import PythonIcon from "@/app/assets/images/Python.svg";
-import DockerIcon from "@/app/assets/images/Docker.svg";
-import LatexIcon from "@/app/assets/images/Latex.svg";
-import MongoDBIcon from "@/app/assets/images/MongoDB.svg";
-import TensorFlowIcon from "@/app/assets/images/TensorFlow.svg";
-import PyTorchIcon from "@/app/assets/images/PyTorch.svg";
-import WordIcon from "@/app/assets/images/Word.svg";
-import FlutterIcon from "@/app/assets/images/Flutter.svg";
-import AWSIcon from "@/app/assets/images/AWS.svg";
-import SQLIcon from "@/app/assets/images/SQL.svg";
-import NestIcon from "@/app/assets/images/Nest.svg";
-import OverleafIcon from "@/app/assets/images/Overleaf.svg";
+import ReactIcon from "@/app/assets/icons/React.svg";
+import FlaskIcon from "@/app/assets/icons/Flask.svg";
+import NodeIcon from "@/app/assets/icons/Node.svg";
+import NextIcon from "@/app/assets/icons/Next.svg";
+import JSIcon from "@/app/assets/icons/JS.svg";
+import PythonIcon from "@/app/assets/icons/Python.svg";
+import DockerIcon from "@/app/assets/icons/Docker.svg";
+import LatexIcon from "@/app/assets/icons/Latex.svg";
+import MongoDBIcon from "@/app/assets/icons/MongoDB.svg";
+import TensorFlowIcon from "@/app/assets/icons/TensorFlow.svg";
+import PyTorchIcon from "@/app/assets/icons/PyTorch.svg";
+import WordIcon from "@/app/assets/icons/Word.svg";
+import FlutterIcon from "@/app/assets/icons/Flutter.svg";
+import AWSIcon from "@/app/assets/icons/AWS.svg";
+import SQLIcon from "@/app/assets/icons/SQL.svg";
+import NestIcon from "@/app/assets/icons/Nest.svg";
+import OverleafIcon from "@/app/assets/icons/Overleaf.svg";
+import Projects from '../Projects/Projects';
+import Skills from '../Skills/Skills';
 
 const webDevIcons = [
 	ReactIcon,
@@ -74,11 +74,9 @@ const skills = [
 
 const RightPanel = () => {
   return (
-		<div className="flex bg-slate-900 w-full lg:w-[73%] p-8 h-full rounded-xl lg:my-5 flex-col border-slate-800 border">
-			<h1 className="text-xl font-bold">
-				Who am I? No, seriously. Does anyone know?
-		  </h1>
-			<p className="mt-5 text-sm">
+		<div className="flex w-full lg:w-[60%] p-8 h-full flex-col pt-[5%] scroll-px-10 lg:max-h-screen">
+			<h1 id="about" className="text-md text-green-600">ABOUT ME</h1>
+			<p className="mt-5 text-xs font-mono">
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id
 				mauris id ipsum semper fermentum. Donec posuere pellentesque leo quis
 				convallis. Sed sed fermentum turpis, at vehicula lacus. Nullam dapibus
@@ -88,10 +86,20 @@ const RightPanel = () => {
 				accumsan magna vel nibh varius vulputate. Ut hendrerit vestibulum
 				libero, sed blandit ligula consequat id.
 			</p>
-			<h1 className="text-xl font-bold mt-8">The stuff I do</h1>
-		  <div className="flex flex-col lg:flex-row flex-wrap">
-			  {skills.map((skill, _) => <SkillBox key={_} skill={skill} />)}
+			<h1 className="text-md mt-16 text-green-600">WHAT I DO</h1>
+			<div className="flex flex-col lg:flex-row flex-wrap">
+				{skills.map((skill, _) => (
+					<SkillBox key={_} skill={skill} />
+				))}
 			</div>
+			<h1 id="projects" className="mb-5 text-md mt-16 text-green-600">PROJECTS</h1>
+			<div className="flex flex-col lg:flex-row flex-wrap">
+				<Projects />
+			</div>
+		  <h1 id="skills" className="text-md mt-16 text-green-600">SKILLS</h1>
+		  <div className="flex flex-col lg:flex-row flex-wrap">
+			  <Skills/>
+		  </div>
 		</div>
 	);
 }
