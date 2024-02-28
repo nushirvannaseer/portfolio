@@ -30,22 +30,22 @@ const LeftPanel = () => {
 					repeat={0}
 				/>
 				<span className="text-md my-2 mb-5 font-mono">
-					Software Engineer at RipeSeed.io
+					software engineer at ripeseed.io
 				</span>
 				<hr />
 
-				<div className="flex flex-row gap-5 mt-5">
+				<div className="flex flex-row mx-auto gap-5 mt-5 font-mono text-xs text-center">
 					<ScrollLink scroll={true} href="#about">
-						About Me
+						about me
 					</ScrollLink>
 					<ScrollLink scroll={true} href="#projects">
-						Projects
+						projects
 					</ScrollLink>
 					<ScrollLink scroll={true} href="#skills">
-						Skills
+						skills
 					</ScrollLink>
 					<ScrollLink scroll={true} href="#contact">
-						Contact Me
+						contact me
 					</ScrollLink>
 				</div>
 
@@ -56,16 +56,23 @@ const LeftPanel = () => {
 					className="mx-auto sm:hidden lg:flex mt-5"
 				/>
 				<div className="flex flex-wrap flex-col mt-5 overflow-ellipsis justify-start">
+					<button className="my-5 rounded-md bg-green-800 hover:bg-green-900 p-2 w-[50%] lg:mx-auto">
+						<Link href="/files/nushirvans-resume.pdf" target="_blank">
+							Resume
+						</Link>
+					</button>
 					<Info
 						icon={EmailIcon}
 						title={"Email"}
 						text={"nushirvannaseer@gmail.com"}
+						link={"mailto:nushirvannaseer@gmail.com"}
 					/>
-					<Info icon={PhoneIcon} title={"Contact"} text={"+923200435969"} />
+					<Info icon={PhoneIcon} title={"Contact"} text={"+923200435969"} link={"tel:+923200435969"} />
 					<Info
 						icon={GithubIcon}
 						title={"Github"}
 						text={"github.com/nushirvannaseer"}
+						link={"https://github.com/nushirvannaseer"}
 					/>
 				</div>
 			</div>

@@ -18,10 +18,6 @@ const ScrollLink = ({ children, ...props }: ScrollLinkProps) => {
 	  elem?.scrollIntoView({
 		  behavior: "smooth"
 	  })
-	//   window.scrollTo({
-    //   top: elem?.getBoundingClientRect().top,
-    //   behavior: "smooth",
-    // });
   };
   return (
     <Link {...props} onClick={handleScroll}>

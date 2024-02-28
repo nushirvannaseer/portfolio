@@ -1,16 +1,18 @@
 "use client";
 import React from "react";
 import { Bounce, Flip, Rotate } from "react-awesome-reveal";
-import TSIcon from "@/app/assets/icons/TS.svg"
-import JSIcon from "@/app/assets/icons/JS.svg"
-import NextIcon from "@/app/assets/icons/Next.svg"
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import TSIcon from "@/app/assets/icons/TS.svg";
+import JSIcon from "@/app/assets/icons/JS.svg";
+import NextIcon from "@/app/assets/icons/Next.svg";
 import ReactIcon from "@/app/assets/icons/React.svg";
-import NodeIcon from "@/app/assets/icons/Node.svg"
-import MongoDBIcon from "@/app/assets/icons/MongoDB.svg"
-import PGSQLIcon from "@/app/assets/icons/PGSQL.svg"
-import PrismaIcon from "@/app/assets/icons/Prisma.svg"
-import NestIcon from "@/app/assets/icons/Nest.svg"
-import AWSIcon from "@/app/assets/icons/AWS.svg"
+import NodeIcon from "@/app/assets/icons/Node.svg";
+import MongoDBIcon from "@/app/assets/icons/MongoDB.svg";
+import PGSQLIcon from "@/app/assets/icons/PGSQL.svg";
+import PrismaIcon from "@/app/assets/icons/Prisma.svg";
+import NestIcon from "@/app/assets/icons/Nest.svg";
+import AWSIcon from "@/app/assets/icons/AWS.svg";
 import PythonIcon from "@/app/assets/icons/Python.svg";
 import PyTorchIcon from "@/app/assets/icons/PyTorch.svg";
 import TensorflowIcon from "@/app/assets/icons/TensorFlow.svg";
@@ -27,7 +29,6 @@ import DockerIcon from "@/app/assets/icons/Docker.svg";
 import GitIcon from "@/app/assets/icons/Git.svg";
 import LatexIcon from "@/app/assets/icons/Latex.svg";
 import Image from "next/image";
-
 
 const skills = [
 	{
@@ -134,17 +135,23 @@ const skills = [
 
 const Skills = () => {
 	return (
-		<div className="flex flex-row flex-wrap gap-5 mt-5 w-full h-full justify-center p-5">
+		<div className="flex flex-row flex-wrap gap-5 mt-5 w-full h-full justify-center p-5 hover:cursor-pointer">
 			<Bounce triggerOnce={false}>
 				{skills.map((skill: any, _: any) => (
-					<div key={_} className="font-mono text-xs mx-auto">
+					<div
+						key={_}
+						data-tooltip-id={`${_}-tooltip`}
+						data-tooltip-content={ skill.name}
+						className="font-mono text-xs mx-auto"
+					>
 						<Image
 							src={skill.logo}
-							alt=""
+							alt={skill.name}
 							height={30}
 							className="mx-auto mb-5"
 						/>
 						{skill.name}
+						<Tooltip id={`${_}-tooltip`} />
 					</div>
 				))}
 			</Bounce>

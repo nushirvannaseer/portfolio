@@ -75,31 +75,32 @@ const skills = [
 const RightPanel = () => {
   return (
 		<div className="flex w-full lg:w-[60%] p-8 h-full flex-col pt-[5%] scroll-px-10 lg:max-h-screen">
-			<h1 id="about" className="text-md text-green-600">ABOUT ME</h1>
+			<h1 id="about" className="text-md text-green-600">
+				ABOUT ME
+			</h1>
 			<p className="mt-5 text-xs font-mono">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id
-				mauris id ipsum semper fermentum. Donec posuere pellentesque leo quis
-				convallis. Sed sed fermentum turpis, at vehicula lacus. Nullam dapibus
-				iaculis dui non vehicula. Suspendisse in augue ut magna semper venenatis
-				a id purus. Nam nec risus sed sapien aliquam auctor. Nullam sit amet
-				bibendum diam. Nulla blandit dolor sed leo sagittis tincidunt. Nam
-				accumsan magna vel nibh varius vulputate. Ut hendrerit vestibulum
-				libero, sed blandit ligula consequat id.
+				{
+					"I'm a huge tech nerd who's constantly amazed by the vastness of the cosmos. I've got almost 2 years' worth of experience in Deep Learning. I've made web apps using the MERN stack, coded up cross-platform apps in React Native and Flutter, and deployed them on the cloud with AWS. I've also worked in C++ and Java and know my way around them. I have experience managing AI-related projects and have also worked on applications that use Langchain and OpenAI APIs."
+				}
 			</p>
 			<h1 className="text-md mt-16 text-green-600">WHAT I DO</h1>
-			<div className="flex flex-col lg:flex-row flex-wrap">
+			<div className="flex flex-col sm:flex-row flex-wrap">
 				{skills.map((skill, _) => (
 					<SkillBox key={_} skill={skill} />
 				))}
 			</div>
-			<h1 id="projects" className="mb-5 text-md mt-16 text-green-600">PROJECTS</h1>
+			<h1 id="projects" className="mb-5 text-md mt-16 text-green-600">
+				PROJECTS
+			</h1>
 			<div className="flex flex-col lg:flex-row flex-wrap">
 				<Projects />
 			</div>
-		  <h1 id="skills" className="text-md mt-16 text-green-600">SKILLS</h1>
-		  <div className="flex flex-col lg:flex-row flex-wrap">
-			  <Skills/>
-		  </div>
+			<h1 id="skills" className="text-md mt-16 text-green-600">
+				SKILLS
+			</h1>
+			<div className="flex flex-col lg:flex-row flex-wrap">
+				<Skills />
+			</div>
 		</div>
 	);
 }
