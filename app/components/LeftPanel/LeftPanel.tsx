@@ -14,7 +14,7 @@ import ScrollLink from "../ScrollLink/ScrollLink";
 
 const LeftPanel = () => {
 	return (
-		<div className="lg-h-screen flex  w-full lg:w-[40%] p-5 h-screen sm:h-[70%]flex-wrap flex-row lg:sticky lg:top-0">
+		<div className="lg-h-full flex  w-full lg:w-[40%] p-5 h-full sm:h-[70%] flex-wrap flex-row lg:sticky lg:top-0">
 			<div className="flex flex-col align-middle mx-auto sm:mx-0 lg:mx-auto my-auto">
 				<TypeAnimation
 					sequence={["nushirvan naseer"]}
