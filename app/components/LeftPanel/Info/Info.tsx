@@ -1,6 +1,7 @@
 import React from 'react'
 import  Image from 'next/image';
 import Link from 'next/link';
+import { Tooltip } from 'react-tooltip';
 
 interface Props{
 	icon: any;
@@ -11,14 +12,16 @@ interface Props{
 
 const Info = ({icon, title, text, link}: Props) => {
   return (
-	  <Link href={link} className='flex flex-row align-middle justify-start text-xs'>
-		  <Image src={icon} height={30} alt="" className='mx-2'/>
-		  <div className='flex flex-col my-4'>
-			  <span className='text-md font-bold'>{title}</span>
-			  <span>{text}</span>
-		  </div>
-	</Link>
-  )
+		<Link
+			href={link}
+			data-tooltip-id={`${text}-tooltip`}
+			data-tooltip-content={title}
+			className="flex flex-row align-middle justify-start text-xs"
+		>
+			<Image src={icon} height={30} alt="" className="mx-2" />
+			<Tooltip id={`${text}-tooltip`} />
+		</Link>
+	);
 }
 
 export default Info

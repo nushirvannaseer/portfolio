@@ -34,7 +34,7 @@ const projects = [
 			start: new Date("2023-1-2"),
 			end: null,
 		},
-		roles: ["Software Engineer", "Project Manager"],
+		roles: ["Project Manager","Software Engineer", ],
 		interestingFact: {
 			text: "9000+ downloads and rated 4.9 stars",
 			icon: null,
@@ -72,7 +72,7 @@ const projects = [
 			start: new Date("2022-9-2"),
 			end: null,
 		},
-		roles: ["Primary Software Engineer", "Project Manager"],
+		roles: ["Project Manager", "Software Engineer", ],
 		techStack: [
 			{
 				logo: ReactIcon,
@@ -138,7 +138,7 @@ const projects = [
 			start: new Date("2023-11-2"),
 			end: new Date("2023-11-2"),
 		},
-		roles: ["Primary Software Engineer"],
+		roles: ["Software Engineer"],
 		techStack: [
 			{
 				logo: FlaskIcon,
@@ -173,7 +173,7 @@ const projects = [
 			start: new Date("2022-3-2"),
 			end: new Date("2022-5-2"),
 		},
-		roles: ["Software Engineer", "Ripeseed Team Lead"],
+		roles: ["Software Engineer", "RS Team Lead"],
 		techStack: [
 			{
 				logo: ReactIcon,

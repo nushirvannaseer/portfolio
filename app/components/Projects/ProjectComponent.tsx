@@ -3,18 +3,18 @@ import Link from "next/link";
 import React from "react";
 import NewWindow from "@/app/assets/icons/NewWindow.svg";
 const monthNames = [
-	"January",
-	"February",
-	"March",
-	"April",
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
 	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"October",
-	"November",
-	"December",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec",
 ];
 
 const Project = ({ project }: any) => {
@@ -22,7 +22,7 @@ const Project = ({ project }: any) => {
 		<Link
 			href={project.link}
 			target="_blank"
-			className="flex flex-col relative sm:flex-row mx-auto lg:mx-auto rounded-md p-5 m-5 w-full lg:w-[100%] min-w-[150px] min-h-[200px] lg:max-h-[250px] lg:min-h-[250px] sm:max-h-[350px] hover:cursor-pointer transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-[3px_3px_10px_-2px_#3FC280] hover:shadow-green-900"
+			className="flex flex-col relative sm:flex-row mx-auto lg:mx-auto rounded-md p-5 m-5 w-full lg:w-[100%] min-w-[150px] min-h-[200px] lg:max-h-[300px] lg:min-h-[250px] sm:max-h-[350px] hover:cursor-pointer transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-[3px_3px_10px_-2px_#3FC280] hover:shadow-green-900"
 		>
 			<div className="mx-auto my-auto rounded-lg mb-4 lg:mb-0 sm:w-1/3 lg:w-1/3">
 				<Image
@@ -49,11 +49,10 @@ const Project = ({ project }: any) => {
 			</div>
 			<div className="sm:ml-10 flex-col sm:w-2/3 lg:w-2/3">
 				<div className="flex flex-row justify-center sm:justify-between sm:pr-10">
-					<div>
-						<p className="text-xs text-center sm:text-left md:text-sm font-bold">
+					
+						<p className="text-xs text-center sm:text-left md:text-sm font-bold  my-auto">
 							{project.name}
 						</p>
-					</div>
 					<div className="hidden sm:block">
 						<p className="text-xs text-center sm:text-left md:text-xs text-green-400">
 							{monthNames[project.date.start.getUTCMonth()] +
@@ -77,12 +76,12 @@ const Project = ({ project }: any) => {
 						</p>
 					</div>
 				</div>
-				<div className="hidden sm:block text-xs sm:text-left text-center sm:mt-5 text-gray-400 font-mono">
+				<div className="hidden sm:block text-xs sm:text-left text-center sm:mt-5 text-gray-400 font-mono max-w-[70%]">
 					<ul className="list-disc">
 						{project.description.map((line: any, _: any) => {
 							return (
 								<li key={_ + _}>
-									<p className="text-xs my-2">
+									<p className="text-xs my-1">
 										{line}
 										<br />
 									</p>
