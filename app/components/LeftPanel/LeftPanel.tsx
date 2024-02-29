@@ -56,11 +56,13 @@ const LeftPanel = () => {
 					className="mx-auto sm:hidden lg:flex mt-5"
 				/>
 				<div className="flex flex-wrap flex-col mt-5 overflow-ellipsis justify-start">
-					<button className="my-5 rounded-md bg-green-800 hover:bg-green-900 p-2 w-[50%] mx-auto">
-						<Link href="/files/nushirvans-resume.pdf" target="_blank">
-							Resume
-						</Link>
-					</button>
+					<Link
+						href="/files/nushirvans-resume.pdf"
+						target="_blank"
+						className="my-5 rounded-md bg-green-800 hover:bg-green-900 p-2 w-[50%] mx-auto text-center"
+					>
+						Resume
+					</Link>
 					<div className="flex flex-wrap flex-row justify-center my-auto">
 						<Info
 							icon={EmailIcon}
