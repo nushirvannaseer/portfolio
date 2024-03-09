@@ -163,24 +163,22 @@ const Skills = () => {
 		<div className="flex flex-col md:flex-row flex-wrap gap-5 mt-5  h-full justify-between p-5 hover:cursor-pointer">
 			{skills.map((skillCategory: Skill[], _: number) => {
 				return (
-					<div key={_} className="flex flex-col mb-5">
+					<div key={_+"_skill_category"} className="flex flex-col mb-5">
 						<h1 className="mb-5">{SkillLevel(_)}</h1>
-							
+
 						<div className="flex flex-row flex-wrap gap-5 justify-start">
 							{skillCategory.map((skill: any, _: any) => (
-						<Zoom>
-								<div key={_} className="font-mono text-[0.6rem] gap-10">
-									<Image
-										src={skill.logo}
-										alt={skill.name}
-										height={30}
-										className="mx-auto mb-5"
-									/>
-									<span className="mx-auto">
-									{skill.name}
-										</span>
-								</div>
-							</Zoom>
+								<Zoom key={_+"_skill_item"}>
+									<div className="font-mono text-[0.6rem] gap-10">
+										<Image
+											src={skill.logo}
+											alt={skill.name}
+											height={30}
+											className="mx-auto mb-5"
+										/>
+										<span className="mx-auto">{skill.name}</span>
+									</div>
+								</Zoom>
 							))}
 						</div>
 					</div>
