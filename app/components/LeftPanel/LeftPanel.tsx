@@ -21,7 +21,7 @@ const LeftPanel = () => {
 					wrapper="span"
 					speed={50}
 					style={{
-						fontSize: "2.5em",
+						fontSize: "2.25rem",
 						display: "inline-block",
 						color: "green",
 						fontFamily: "monospace",
@@ -29,11 +29,10 @@ const LeftPanel = () => {
 					cursor={false}
 					repeat={0}
 				/>
-				<span className="text-md my-2 mb-5 font-mono">
+				<span className="text-md my-2 mb-5 font-mono mx-auto">
 					software engineer at ripeseed.io
 				</span>
 				<hr />
-
 				<div className="flex flex-row mx-auto gap-5 mt-5 font-mono text-xs text-center">
 					<ScrollLink scroll={true} href="#about">
 						about me
@@ -43,9 +42,6 @@ const LeftPanel = () => {
 					</ScrollLink>
 					<ScrollLink scroll={true} href="#skills">
 						skills
-					</ScrollLink>
-					<ScrollLink scroll={true} href="#contact">
-						contact me
 					</ScrollLink>
 				</div>
 

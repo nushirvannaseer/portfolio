@@ -98,7 +98,7 @@ const RightPanel = () => {
 			<h1 id="skills" className="text-md mt-16 text-green-600">
 				SKILLS
 			</h1>
-			<div className="flex flex-col lg:flex-row flex-wrap">
+			<div className="flex flex-col flex-wrap">
 				<Skills />
 			</div>
 		</div>

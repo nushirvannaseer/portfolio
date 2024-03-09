@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { Bounce, Flip, Rotate } from "react-awesome-reveal";
-import { Tooltip } from "react-tooltip";
+import {  Zoom } from "react-awesome-reveal";
 import "react-tooltip/dist/react-tooltip.css";
 import TSIcon from "@/app/assets/icons/TS.svg";
 import JSIcon from "@/app/assets/icons/JS.svg";
@@ -30,7 +29,12 @@ import GitIcon from "@/app/assets/icons/Git.svg";
 import LatexIcon from "@/app/assets/icons/Latex.svg";
 import Image from "next/image";
 
-const skills = [
+interface Skill {
+	name: string;
+	logo: any;
+}
+
+const advancedSkills = [
 	{
 		name: "TypeScript",
 		logo: TSIcon,
@@ -52,12 +56,43 @@ const skills = [
 		logo: NodeIcon,
 	},
 	{
+		name: "Python",
+		logo: PythonIcon,
+	},
+
+	{
+		name: "Flask",
+		logo: FlaskIcon,
+	},
+	{
 		name: "MongoDB",
 		logo: MongoDBIcon,
 	},
 	{
 		name: "PostgreSQL",
 		logo: PGSQLIcon,
+	},
+	{
+		name: "AWS",
+		logo: AWSIcon,
+	},
+	{
+		name: "Git",
+		logo: GitIcon,
+	},
+	{
+		name: "Tailwind CSS",
+		logo: TailwindIcon,
+	},
+	{
+		name: "Material UI",
+		logo: MUIIcon,
+	},
+] as Skill[];
+const intermediateSkills = [
+	{
+		name: "PyTorch",
+		logo: PyTorchIcon,
 	},
 	{
 		name: "Prisma",
@@ -68,33 +103,26 @@ const skills = [
 		logo: NestIcon,
 	},
 	{
-		name: "AWS",
-		logo: AWSIcon,
+		name: "Redux",
+		logo: ReduxIcon,
 	},
+
 	{
-		name: "Python",
-		logo: PythonIcon,
+		name: "Bootstrap",
+		logo: BootstrapIcon,
 	},
-	{
-		name: "PyTorch",
-		logo: PyTorchIcon,
-	},
+] as Skill[];
+const basicSkills = [
 	{
 		name: "TensorFlow",
 		logo: TensorflowIcon,
 	},
-	{
-		name: "Redux",
-		logo: ReduxIcon,
-	},
+
 	{
 		name: "GraphQL",
 		logo: GraphQLIcon,
 	},
-	{
-		name: "Flask",
-		logo: FlaskIcon,
-	},
+
 	{
 		name: "GatsbyJs",
 		logo: GatsbyIcon,
@@ -108,53 +136,56 @@ const skills = [
 		logo: FlutterIcon,
 	},
 	{
-		name: "Tailwind CSS",
-		logo: TailwindIcon,
-	},
-	{
-		name: "Material UI",
-		logo: MUIIcon,
-	},
-	{
-		name: "Bootstrap",
-		logo: BootstrapIcon,
-	},
-	{
 		name: "Docker",
 		logo: DockerIcon,
 	},
-	{
-		name: "Git",
-		logo: GitIcon,
-	},
+
 	{
 		name: "Latex",
 		logo: LatexIcon,
 	},
-];
+] as Skill[];
+
+const skills: Skill[][] = [advancedSkills, intermediateSkills, basicSkills];
+
+const SkillLevel = (level: number) => {
+	const text =
+		level === 0
+			? "Expert in"
+			: level === 1
+			? "Worked extensively with"
+			: "Know how of";
+	return <span className="text-xs font-mono text-green-500">{text}:</span>;
+};
 
 const Skills = () => {
 	return (
-		<div className="flex flex-row flex-wrap gap-5 mt-5 w-full h-full justify-center p-5 hover:cursor-pointer">
-			<Bounce triggerOnce={false}>
-				{skills.map((skill: any, _: any) => (
-					<div
-						key={_}
-						data-tooltip-id={`${_}-tooltip`}
-						data-tooltip-content={ skill.name}
-						className="font-mono text-xs mx-auto"
-					>
-						<Image
-							src={skill.logo}
-							alt={skill.name}
-							height={30}
-							className="mx-auto mb-5"
-						/>
-						{skill.name}
-						<Tooltip id={`${_}-tooltip`} />
+		<div className="flex flex-col md:flex-row flex-wrap gap-5 mt-5  h-full justify-between p-5 hover:cursor-pointer">
+			{skills.map((skillCategory: Skill[], _: number) => {
+				return (
+					<div key={_} className="flex flex-col mb-5">
+						<h1 className="mb-5">{SkillLevel(_)}</h1>
+							
+						<div className="flex flex-row flex-wrap gap-5 justify-start">
+							{skillCategory.map((skill: any, _: any) => (
+						<Zoom>
+								<div key={_} className="font-mono text-[0.6rem] gap-10">
+									<Image
+										src={skill.logo}
+										alt={skill.name}
+										height={30}
+										className="mx-auto mb-5"
+									/>
+									<span className="mx-auto">
+									{skill.name}
+										</span>
+								</div>
+							</Zoom>
+							))}
+						</div>
 					</div>
-				))}
-			</Bounce>
+				);
+			})}
 		</div>
 	);
 };
