@@ -7,6 +7,7 @@ import EmailIcon from "@/app/assets/icons/Email.svg";
 import GithubIcon from "@/app/assets/icons/Github.svg";
 import InstagramIcon from "@/app/assets/icons/Instagram.svg"
 import DevIcon from "@/app/assets/icons/Dev.svg";
+import LinkedInIcon from "@/app/assets/icons/LinkedIn.svg";
 import { TypeAnimation } from 'react-type-animation';
 import Link from "next/link";
 import ScrollLink from "../ScrollLink/ScrollLink";
@@ -78,6 +79,12 @@ const LeftPanel = () => {
 							text={"github.com/nushirvannaseer"}
 							link={"https://github.com/nushirvannaseer"}
 						/>
+							<Info
+								icon={LinkedInIcon}
+								title={"Linkedin"}
+								text={"https://linkedin.com/in/nushirvan-naseer"}
+								link={"https://linkedin.com/in/nushirvan-naseer"}
+							/>
 						<Info
 							icon={InstagramIcon}
 							title={"Instagram"}
