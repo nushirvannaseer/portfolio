@@ -7,14 +7,17 @@ import EmailIcon from "@/app/assets/icons/Email.svg";
 import GithubIcon from "@/app/assets/icons/Github.svg";
 import InstagramIcon from "@/app/assets/icons/Instagram.svg"
 import DevIcon from "@/app/assets/icons/Dev.svg";
+import LinkedInIcon from "@/app/assets/icons/LinkedIn.svg";
 import { TypeAnimation } from 'react-type-animation';
 import Link from "next/link";
 import ScrollLink from "../ScrollLink/ScrollLink";
+import ChatBot from "../ChatBot/page";
 
 
 const LeftPanel = () => {
 	return (
 		<div className="lg:h-full flex my-auto w-full lg:w-[40%] p-5 h-full sm:h-[70%] flex-wrap flex-row lg:sticky lg:top-0">
+			<ChatBot/>
 			<div className="flex flex-col align-middle mx-auto sm:mx-0 lg:mx-auto my-auto">
 				<TypeAnimation
 					sequence={["nushirvan naseer"]}
@@ -78,6 +81,12 @@ const LeftPanel = () => {
 							text={"github.com/nushirvannaseer"}
 							link={"https://github.com/nushirvannaseer"}
 						/>
+							<Info
+								icon={LinkedInIcon}
+								title={"Linkedin"}
+								text={"https://linkedin.com/in/nushirvan-naseer"}
+								link={"https://linkedin.com/in/nushirvan-naseer"}
+							/>
 						<Info
 							icon={InstagramIcon}
 							title={"Instagram"}

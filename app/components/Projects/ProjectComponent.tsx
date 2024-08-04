@@ -65,7 +65,7 @@ const Project = ({ project }: any) => {
 								  project.date?.end?.getFullYear()
 								: "Present"}
 						</p>
-						<p className="text-xs text-center sm:text-left md:text-xs text-gray-300">
+						<span className="text-xs text-center sm:text-left md:text-xs text-gray-300">
 							<ul>
 								{project.roles.map((role: any, _: any) => (
 									<li className="ml-2 list-disc" key={_ + _ + _}>
@@ -73,7 +73,7 @@ const Project = ({ project }: any) => {
 									</li>
 								))}
 							</ul>
-						</p>
+						</span>
 					</div>
 				</div>
 				<div className="hidden sm:block text-xs sm:text-left text-center sm:mt-5 text-gray-400 font-mono max-w-[70%]">

@@ -80,7 +80,7 @@ const RightPanel = () => {
 			</h1>
 			<p className="mt-5 text-xs font-mono">
 				{
-					"I'm a huge tech nerd who's constantly amazed by the vastness of the cosmos. I've got almost 2 years' worth of experience in Deep Learning. I've made web apps using the MERN stack, coded up cross-platform apps in React Native and Flutter, and deployed them on the cloud with AWS. I've also worked in C++ and Java and know my way around them. I have experience managing AI-related projects and have also worked on applications that use Langchain and OpenAI APIs."
+					"Passionate about the web and GenAI, I bring over 5 years of experience in web development and mobile app development to the table. My journey includes creating robust web apps with the MERN stack and innovative cross-platform apps in React Native and Flutter, all successfully deployed on the cloud. Additionally, I've dedicated 2 years to mastering deep learning and have a strong foundation in Python, C++ and Java. For the past three months, I've been imparting my knowledge by teaching an introductory Data Science course at Knowledge Streams."
 				}
 			</p>
 			<h1 className="text-md mt-16 text-green-600">WHAT I DO</h1>
