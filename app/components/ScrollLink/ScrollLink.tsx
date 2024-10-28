@@ -1,4 +1,5 @@
-// components/ScrollLink.tsx
+"use client";
+
 import Link, { LinkProps } from "next/link";
 import React, { PropsWithChildren } from "react";
 // mirror the props of next/link component
@@ -10,14 +11,14 @@ type ScrollLinkProps = AnchorProps & LinkProps & PropsWithChildren;
 // component definition
 const ScrollLink = ({ children, ...props }: ScrollLinkProps) => {
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-	  e.preventDefault();
-	  //remove everything before the hash
-	  const targetId = e.currentTarget.href.replace(/.*\#/, "");
-	  const elem = document.getElementById(targetId);
-	  console.log(elem);
-	  elem?.scrollIntoView({
-		  behavior: "smooth"
-	  })
+    e.preventDefault();
+    //remove everything before the hash
+    const targetId = e.currentTarget.href.replace(/.*\#/, "");
+    const elem = document.getElementById(targetId);
+    console.log(elem);
+    elem?.scrollIntoView({
+      behavior: "smooth",
+    });
   };
   return (
     <Link {...props} onClick={handleScroll}>
