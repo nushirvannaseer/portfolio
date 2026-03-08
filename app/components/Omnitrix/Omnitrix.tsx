@@ -85,7 +85,7 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
               {/* Card body — revealed by clipPath in sync with scan line */}
               <motion.div
                 key={`content-${activeIndex}`}
-                className="w-full flex-1 flex flex-col pb-10"
+                className="w-full h-[20rem] flex-1 flex flex-col pb-10"
                 initial={{ clipPath: "inset(0 0 100% 0)" }}
                 animate={{ clipPath: "inset(0 0 0% 0)" }}
                 transition={{ duration: 0.7, ease: "easeIn" }}
