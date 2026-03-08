@@ -91,7 +91,7 @@ const RightPanel = ({ projects }: { projects: any[] }) => {
         challenges.
       </p>
       <SectionHeading label="WHAT I DO" />
-      <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start -mx-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {skills.map((skill, _) => (
           <SkillBox key={_} skill={skill} />
         ))}

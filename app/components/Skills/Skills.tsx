@@ -66,7 +66,7 @@ const row1 = icons.slice(0, Math.ceil(icons.length / 2));
 const row2 = icons.slice(Math.ceil(icons.length / 2));
 
 const IconCard = ({ src, name }: { src: any; name: string }) => (
-  <div className="group/icon relative flex items-center gap-2.5 rounded-xl border border-white/10 bg-zinc-900/60 px-4 py-2.5 backdrop-blur-sm transition-all duration-300 hover:border-green-500/40 hover:bg-zinc-900/80 hover:shadow-lg hover:shadow-green-500/5 mx-2">
+  <div className="group/icon relative flex items-center gap-2.5 rounded-xl border border-white/10 bg-zinc-900/60 px-4 py-2.5 backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:bg-zinc-900/80 hover:shadow-lg hover:shadow-accent/5 mx-2">
     <div className="flex h-7 w-7 shrink-0 items-center justify-center">
       <Image
         src={src}

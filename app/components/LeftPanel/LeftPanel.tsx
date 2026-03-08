@@ -30,7 +30,68 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-const LeftPanel = () => {
+interface LeftPanelProps {
+  isDesktop?: boolean;
+}
+
+const LeftPanel = ({ isDesktop = false }: LeftPanelProps) => {
+  if (isDesktop) {
+    return (
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col md:flex-row gap-6 items-center">
+          <Name />
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_8px_rgba(var(--accent-color),1)]" />
+            <span className="text-sm font-mono text-zinc-400 capitalize whitespace-nowrap">
+              Senior Software Engineer
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-4">
+          <Link
+            href="/files/nushirvans-resume.pdf"
+            target="_blank"
+            className="relative inline-flex h-10 overflow-hidden rounded-xl p-[1px] group/btn"
+          >
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,rgba(var(--accent-color),1)_0%,rgba(var(--accent-color),0.2)_50%,rgba(var(--accent-color),1)_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-zinc-950 px-6 py-1 text-xs font-medium text-white backdrop-blur-3xl transition-all group-hover/btn:bg-zinc-900 whitespace-nowrap">
+              View Resume
+            </span>
+          </Link>
+
+          <div className="flex items-center gap-4">
+            <Info
+              icon={EmailIcon}
+              title={""}
+              text={""}
+              link={"mailto:nushirvannaseer@gmail.com"}
+            />
+            <Info
+              icon={GithubIcon}
+              title={""}
+              text={""}
+              link={"https://github.com/nushirvannaseer"}
+            />
+            <Info
+              icon={LinkedInIcon}
+              title={""}
+              text={""}
+              link={"https://linkedin.com/in/nushirvan-naseer"}
+            />
+          </div>
+        </div>
+
+        <p className="text-[11px] font-mono leading-relaxed text-zinc-400 max-w-xl">
+          Results-oriented Software Engineer with 6+ years of experience
+          building and optimizing high-performance applications. Specialized in
+          modern frameworks (React, Next.js, Node.js), GoLang, and AWS cloud
+          infrastructure.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="lg:h-screen w-full lg:w-[40%] xl:w-[32%] p-6 lg:sticky lg:top-0 flex items-center justify-center">
       <ChatBot />

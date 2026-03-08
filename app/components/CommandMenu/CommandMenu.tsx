@@ -16,6 +16,8 @@ import {
   MessageSquare,
   Search,
   ArrowRight,
+  Zap,
+  Layout,
 } from "lucide-react";
 
 const navItems = [
@@ -85,6 +87,7 @@ const themes = [
 const CommandMenu = () => {
   const [open, setOpen] = useState(false);
   const [activeColor, setActiveColor] = useState("34, 197, 94"); // Emerald default
+  const [desktopMode, setDesktopMode] = useState(false);
 
   // Load theme preference
   useEffect(() => {
@@ -96,6 +99,12 @@ const CommandMenu = () => {
         "--accent-glow-color",
         `rgba(${saved}, 0.4)`,
       );
+    }
+
+    // Load desktop mode preference
+    const savedDesktop = localStorage.getItem("nush-desktop-mode");
+    if (savedDesktop === "true") {
+      setDesktopMode(true);
     }
 
     const down = (e: KeyboardEvent) => {
@@ -118,6 +127,18 @@ const CommandMenu = () => {
     );
     localStorage.setItem("nush-accent-color", color);
     setOpen(false);
+  };
+
+  const toggleDesktop = () => {
+    const newState = !desktopMode;
+    setDesktopMode(newState);
+    localStorage.setItem("nush-desktop-mode", newState.toString());
+    setOpen(false);
+
+    // Dispatch a custom event so other components can react
+    window.dispatchEvent(
+      new CustomEvent("toggle-desktop-mode", { detail: newState }),
+    );
   };
 
   const runCommand = useCallback((command: () => void) => {
@@ -298,6 +319,63 @@ const CommandMenu = () => {
                       <span>{item.label}</span>
                     </Command.Item>
                   ))}
+                </Command.Group>
+
+                <Command.Separator className="h-px bg-white/5 my-2" />
+
+                <Command.Group
+                  heading={
+                    <span className="px-2 pb-2 pt-1 text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
+                      Experimental
+                    </span>
+                  }
+                >
+                  <Command.Item
+                    value="desktop mode os interface"
+                    onSelect={toggleDesktop}
+                    className="group flex cursor-default select-none items-center gap-3 rounded-xl px-3 py-3 text-sm text-zinc-400 outline-none aria-selected:bg-zinc-800 aria-selected:text-zinc-100 transition-all font-mono"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/5 bg-zinc-900 group-aria-selected:border-accent/30 group-aria-selected:text-accent transition-colors">
+                      <Layout size={16} />
+                    </div>
+                    <span>
+                      {desktopMode ? "Exit Desktop Mode" : "Enter Nush-OS Mode"}
+                    </span>
+                    <div className="ml-auto flex items-center gap-1.5 text-[10px] text-zinc-500 opacity-0 group-aria-selected:opacity-100 transition-opacity">
+                      Type &quot;desktop&quot;{" "}
+                      <Zap size={10} className="text-accent ml-1" />
+                    </div>
+                  </Command.Item>
+                </Command.Group>
+
+                <Command.Separator className="h-px bg-white/5 my-2" />
+
+                <Command.Group
+                  heading={
+                    <span className="px-2 pb-2 pt-1 text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
+                      Hints & Shortcuts
+                    </span>
+                  }
+                >
+                  <div className="px-3 py-2 space-y-2">
+                    <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
+                      <span>Open Terminal</span>
+                      <div className="flex gap-1">
+                        <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-zinc-800">
+                          ⌘
+                        </kbd>
+                        <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-zinc-800">
+                          K
+                        </kbd>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
+                      <span>Chat with Assistant</span>
+                      <span className="text-accent/60 italic font-bold">
+                        Bottom Left Icon
+                      </span>
+                    </div>
+                  </div>
                 </Command.Group>
               </Command.List>
 
