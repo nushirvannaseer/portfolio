@@ -126,7 +126,7 @@ const projects = [
   },
   {
     name: "KVet and KDukaan",
-    link: null,
+    link: "https://kisaangroup.pk/",
     image: null,
     description: [
       "Standalone apps for potential vets and shop owners to sign up for Waseela’s initiatives",
