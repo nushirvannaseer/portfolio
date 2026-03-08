@@ -42,10 +42,8 @@ const DesktopWindow = ({
       style={{
         zIndex: activeId === id ? 50 : 40,
         position: "absolute",
-        left: "15%",
-        top: "10%",
       }}
-      className="w-[70vw] h-[75vh] min-w-[300px] min-h-[300px] rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-2xl shadow-2xl flex flex-col overflow-hidden resize select-none"
+      className="left-[2%] md:left-[15%] top-[8%] md:top-[10%] w-[96vw] md:w-[70vw] h-[70vh] md:h-[75vh] min-w-[300px] min-h-[300px] rounded-2xl border border-white/10 bg-zinc-900/80 backdrop-blur-2xl shadow-2xl flex flex-col overflow-hidden resize select-none"
     >
       {/* Title Bar */}
       <div

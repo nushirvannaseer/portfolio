@@ -162,7 +162,7 @@ const CommandMenu = () => {
   return (
     <>
       {/* Global Shortcut Badges (Fixed Top Right) */}
-      <div className="fixed top-6 right-6 z-[60] flex items-center gap-3">
+      <div className="fixed top-2 md:top-6 left-2 md:left-auto md:right-6 z-[60] flex items-center gap-3">
         {/* DEX Toggle Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}

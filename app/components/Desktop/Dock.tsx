@@ -34,8 +34,8 @@ const Dock = ({ windows, onOpen, activeId }: DockProps) => {
   ];
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60]">
-      <div className="flex items-center gap-2 p-2 rounded-2xl border border-white/10 bg-zinc-950/40 backdrop-blur-3xl shadow-2xl">
+    <div className="fixed bottom-2 md:bottom-6 left-1/2 -translate-x-1/2 z-[60] rounded-2xl">
+      <div className="flex items-center gap-1 sm:gap-2 p-1.5 md:p-2 border border-white/10 bg-zinc-950/80 backdrop-blur-3xl shadow-2xl justify-center rounded-2xl">
         {items.map((item) => {
           const win = windows.find((w) => w.id === item.id);
           const isOpen = win?.isOpen;
@@ -47,13 +47,13 @@ const Dock = ({ windows, onOpen, activeId }: DockProps) => {
               whileHover={{ y: -6, scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onOpen(item.id)}
-              className={`group relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
+              className={`group relative shrink-0 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
                 isActive
                   ? "bg-accent/20 border-accent/40 text-accent"
                   : "bg-white/5 border border-white/5 text-zinc-500 hover:text-zinc-100 hover:bg-white/10"
               }`}
             >
-              {item.icon}
+              <div className="scale-75 md:scale-100">{item.icon}</div>
 
               {/* Active Indicator Dot */}
               {isOpen && (

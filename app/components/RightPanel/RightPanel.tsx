@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import SkillBox from "./SkillBox/SkillBox";
+import Omnitrix from "../Omnitrix/Omnitrix";
 import ReactIcon from "@/app/assets/icons/React.svg";
 import FlaskIcon from "@/app/assets/icons/Flask.svg";
 import NodeIcon from "@/app/assets/icons/Node.svg";
@@ -32,37 +32,57 @@ const SectionHeading = ({ id, label }: { id?: string; label: string }) => (
   </div>
 );
 
-const webDevIcons = [
-  ReactIcon,
-  FlaskIcon,
-  NodeIcon,
-  NextIcon,
-  NestIcon,
-  JSIcon,
-  AWSIcon,
-  DockerIcon,
-  MongoDBIcon,
-  SQLIcon,
-];
+// LEGACY — skill cards (kept for reference)
+// const webDevIcons = [
+//   ReactIcon, FlaskIcon, NodeIcon, NextIcon, NestIcon, JSIcon, AWSIcon, DockerIcon, MongoDBIcon, SQLIcon,
+// ];
+// const skills = [
+//   { title: "Full Stack Development", description: "...", icons: webDevIcons },
+//   { title: "Cloud & Infrastructure", description: "...", icons: [AWSIcon, DockerIcon, NestIcon, SQLIcon] },
+//   { title: "APIs & Integration", description: "...", icons: [NextIcon, JSIcon, MongoDBIcon, PythonIcon] },
+// ];
 
-const skills = [
+const experiences = [
   {
-    title: "Full Stack Development",
-    description:
-      "Specialized in building high-performance applications using React, Next.js, and Node.js. Experienced in architecting scalable backends with GoLang and Python.",
-    icons: webDevIcons,
+    company: "The Moonshot Factory (Kaleidoscope Team)",
+    role: "Full Stack Engineer",
+    date: "04/2025 — PRESENT",
+    description: [
+      "Slashed dashboard and insight page loading times from 6s to under 2s by migrating heavy logic to Redux with redux-persist.",
+      "Architected an end-to-end correlations bot utilizing the AWS SDK for GoLang, Neptune, and S3.",
+      "Strengthened security by upgrading AWS Amplify and engineering an SSO system with MFA for AWS Cognito.",
+      "Led major performance optimizations and achieved 320+ contributions within the first year.",
+    ],
   },
   {
-    title: "Cloud & Infrastructure",
-    description:
-      "Expertise in AWS cloud infrastructure, including Lambda, EC2, ECS, and CDK. Proven ability to architect secure data pipelines and implement SSO/MFA protocols.",
-    icons: [AWSIcon, DockerIcon, NestIcon, SQLIcon],
+    company: "Waseela, Lahore, PK",
+    role: "Full Stack Engineer",
+    date: "12/2024 — 04/2025",
+    description: [
+      "Deployed standalone applications (KVet and KDukaan Licensee Apps) with 800+ submissions.",
+      "Streamlined development by implementing configurational fixes to TypeORM migrations.",
+      "Won the Digital Signage Hackathon by building a React Native TV app for rural promotional content.",
+    ],
   },
   {
-    title: "APIs & Integration",
-    description:
-      "Designing and implementing RESTful APIs and GraphQL. Integrating third-party services like OpenAI, Spotify, and YouTube APIs for enhanced functionality.",
-    icons: [NextIcon, JSIcon, MongoDBIcon, PythonIcon],
+    company: "RipeSeed, Lahore, PK",
+    role: "Software Engineer",
+    date: "09/2021 — 11/2024",
+    description: [
+      "Technical Lead of 5 developers for Influnity, a Web+Chrome Extension project.",
+      "Delivered 10+ client projects including Satoshi's Index and ProfilePro (10K+ active users).",
+      "Migrated user-bases and applications from Digital Ocean/Grafana to AWS, React, and NestJS.",
+      "Developed high-priority AI-driven applications using React Native and Flask/OpenAI.",
+    ],
+  },
+  {
+    company: "RUN Pakistan, Lahore, PK",
+    role: "Software Development Intern",
+    date: "11/2019 — 08/2020",
+    description: [
+      "Contributed to the development of RUN's web application while mastering React.",
+      "Built an e-commerce application from scratch using Flutter.",
+    ],
   },
 ];
 
@@ -90,16 +110,13 @@ const RightPanel = ({ projects }: { projects: any[] }) => {
         speeds, and lead cross-functional teams through complex technical
         challenges.
       </p>
-      <SectionHeading label="WHAT I DO" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {skills.map((skill, _) => (
-          <SkillBox key={_} skill={skill} />
-        ))}
-      </div>
       <SectionHeading id="experience" label="EXPERIENCE" />
+      <Omnitrix items={experiences} />
+      {/* LEGACY — experience section moved into Omnitrix */}
+      {/* <SectionHeading id="experience" label="EXPERIENCE" />
       <div className="flex flex-col flex-wrap">
         <Experience />
-      </div>
+      </div> */}
       <SectionHeading id="projects" label="PROJECTS" />
       <div className="flex flex-col lg:flex-row flex-wrap">
         <Projects projects={projects} />

@@ -69,6 +69,12 @@ const LeftPanel = ({ isDesktop = false }: LeftPanelProps) => {
               link={"mailto:nushirvannaseer@gmail.com"}
             />
             <Info
+              icon={PhoneIcon}
+              title={""}
+              text={""}
+              link={"tel:+923200435969"}
+            />
+            <Info
               icon={GithubIcon}
               title={""}
               text={""}
@@ -79,6 +85,12 @@ const LeftPanel = ({ isDesktop = false }: LeftPanelProps) => {
               title={""}
               text={""}
               link={"https://linkedin.com/in/nushirvan-naseer"}
+            />
+            <Info
+              icon={InstagramIcon}
+              title={""}
+              text={""}
+              link={"https://www.instagram.com/nush0w0rvan"}
             />
             <Info
               icon={ChessIcon}

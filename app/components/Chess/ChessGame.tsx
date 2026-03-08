@@ -364,7 +364,7 @@ const ChessGame = () => {
   const { capW, capB } = getCapturedPieces();
 
   return (
-    <div className="flex flex-col md:flex-row items-start justify-center gap-8 p-4 w-full h-full max-w-4xl mx-auto">
+    <div className="flex flex-col md:flex-row items-center md:items-start justify-start md:justify-center gap-8 p-0 md:p-4 w-full min-h-full max-w-4xl mx-auto">
       <div className="flex flex-col gap-3 w-full max-w-[400px]">
         {/* Nushirvan (Black) Profile */}
         <div className="flex items-center justify-between px-1">
@@ -435,11 +435,6 @@ const ChessGame = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div
-              className={`font-mono px-2 py-0.5 rounded text-sm min-w-[50px] text-center ${game.turn() === "w" && !game.isGameOver() && !isTimeOut ? "bg-accent/20 text-accent font-bold ring-1 ring-accent" : "bg-zinc-800/50 text-zinc-500"}`}
-            >
-              {formatTime(whiteTime)}
-            </div>
             <div className="flex -space-x-1">
               {capW.map((p, i) => (
                 <span
@@ -450,11 +445,16 @@ const ChessGame = () => {
                 </span>
               ))}
             </div>
+            <div
+              className={`font-mono px-2 py-0.5 rounded text-sm min-w-[50px] text-center ${game.turn() === "w" && !game.isGameOver() && !isTimeOut ? "bg-accent/20 text-accent font-bold ring-1 ring-accent" : "bg-zinc-800/50 text-zinc-500"}`}
+            >
+              {formatTime(whiteTime)}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="w-full md:w-[250px] flex flex-col gap-4 border border-zinc-800/50 bg-zinc-900/30 p-4 rounded-xl shadow-lg h-auto md:h-[500px]">
+      <div className="w-full md:w-[250px] flex flex-col gap-4 border border-zinc-800/50 bg-zinc-900/30 p-4 rounded-xl shadow-lg h-[220px] md:h-[500px] shrink-0">
         <div className="flex flex-col gap-2 pb-2 border-b border-white/5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
