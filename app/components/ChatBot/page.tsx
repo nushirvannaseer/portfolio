@@ -9,10 +9,10 @@ import { AttentionSeeker, Fade } from "react-awesome-reveal";
 
 const Chatbot = () => {
   const [showChatbot, setShowChatbot] = useState(false);
-  const [questions, setQuestions] = useState([]) as any;
-  const [answers, setAnswers] = useState([]) as any;
-  const [currentQuestion, setCurrentQuestion] = useState("") as any;
-  const endOfMessagesRef = useRef(null) as any;
+  const [questions, setQuestions] = useState<string[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [currentQuestion, setCurrentQuestion] = useState("");
+  const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
 
   const scrollToBottom = () => {
@@ -20,29 +20,33 @@ const Chatbot = () => {
   };
 
   const handleRun = useCallback(() => {
-    if (currentQuestion) {
-      setQuestions((prev: any) => [...prev, currentQuestion]);
+    if (currentQuestion.trim()) {
+      const q = currentQuestion;
+      setQuestions((prev) => [...prev, q]);
       setLoading(true);
-      askQuestion(currentQuestion)
+      setCurrentQuestion("");
+
+      askQuestion(q)
         .then((answer) => {
           setLoading(false);
-          setAnswers((prev: any) => [...prev, answer]);
-          setCurrentQuestion("");
+          setAnswers((prev) => [...prev, answer]);
           scrollToBottom();
         })
         .catch((e) => {
           setLoading(false);
-          setAnswers((prev: any) => [...prev, e]);
-          setCurrentQuestion("");
+          setAnswers((prev) => [
+            ...prev,
+            "Connection error. Please try again.",
+          ]);
           scrollToBottom();
         });
     }
   }, [currentQuestion]);
 
   useEffect(() => {
-    const keyHandler = (event: any) => {
+    const keyHandler = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        event.preventDefault(); // Prevent the default Enter key behavior
+        event.preventDefault();
         handleRun();
       }
     };
@@ -56,74 +60,105 @@ const Chatbot = () => {
     };
   }, [handleRun, showChatbot]);
 
-  useEffect(scrollToBottom, [questions, answers]);
+  useEffect(scrollToBottom, [questions, answers, loading]);
 
   return (
     <>
-      <div className="z-50 lg:right-[92.5%] fixed right-4 bottom-4">
-        <AttentionSeeker effect="wobble">
+      {/* Floating Toggle Button */}
+      <div className="fixed left-6 bottom-6 z-50">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setShowChatbot(!showChatbot)}
+          className={`flex items-center justify-center w-12 h-12 rounded-full border border-white/10 shadow-2xl transition-all duration-300 ${
+            showChatbot
+              ? "bg-zinc-800 rotate-90"
+              : "bg-green-600 hover:bg-green-500 shadow-green-500/20"
+          }`}
+        >
           <Image
-            onClick={() => setShowChatbot(!showChatbot)}
-            height={35}
-            src={ChatIcon}
-            alt="ChatBot icon"
-            className="mx-auto mt-5"
+            src={showChatbot ? CloseIcon : ChatIcon}
+            width={20}
+            height={20}
+            alt="Toggle Chat"
+            className={showChatbot ? "brightness-200" : "brightness-0 invert"}
           />
-        </AttentionSeeker>
+        </motion.button>
       </div>
+
       {showChatbot && (
         <motion.div
-          initial={{ opacity: 0, y: 0, x: 0 }}
-          animate={{ opacity: 1, y: 0, x: 0 }}
-          transition={{ duration: 0.5, type: "spring" }}
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.95 }}
+          className="fixed left-6 bottom-24 z-50 w-[90vw] md:w-[400px] h-[500px] rounded-2xl border border-white/10 bg-zinc-950/80 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col font-mono"
         >
-          <div className="z-50 lg:right-[65%] fixed right-[2.5%] bottom-[9%] font-mono text-xs bg-black border-green-900 border-[0.5px] opacity-[100%] rounded-md h-[60vh] w-[80vw] md:h-[50vh] md:w-[40vw] lg:h-[60vh] lg:w-[30vw] overflow-hidden">
-            <div className="flex flex-col z-50 h-full">
-              <div className="flex flex-row justify-between bg-green-900 w-full h-10 p-5 items-center">
-                <Image
-                  onClick={() => setShowChatbot(!showChatbot)}
-                  src={CloseIcon}
-                  height={15}
-                  alt="Close icon"
-                />
-                <span>assistant.chat</span>
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold">
+                Assistant Interface
+              </span>
+            </div>
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-zinc-800" />
+              <div className="w-2.5 h-2.5 rounded-full bg-zinc-800" />
+            </div>
+          </div>
+
+          {/* Messages Area */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
+            {questions.length === 0 && (
+              <div className="h-full flex flex-col items-center justify-center text-center space-y-3 opacity-50">
+                <span className="text-xs text-green-500 italic px-8">
+                  {`"System Ready. Inquire about nushirvan's expertise, stack, or availability."`}
+                </span>
               </div>
-              <div className="z-50 flex flex-col h-full p-5">
-                <div
-                  className={`overflow-auto flex-1 text-wrap whitespace-pre-wrap ${
-                    questions.length > 0 ? "" : "m-auto"
-                  }`}
-                >
-                  {questions.length < 1 && (
-                    <span className="text-yellow-500 text-center">
-                      {"Have a question about me?\nYou can ask my assistant"}
+            )}
+
+            {questions.map((q, i) => (
+              <div
+                key={i}
+                className="space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-300"
+              >
+                <div className="flex gap-2 text-[11px]">
+                  <span className="text-zinc-500">guest:</span>
+                  <span className="text-zinc-100">{q}</span>
+                </div>
+                {answers[i] ? (
+                  <div className="flex gap-2 text-[11px] bg-green-500/5 p-2 rounded-lg border border-green-500/10">
+                    <span className="text-green-500 shrink-0">sys:</span>
+                    <span className="text-zinc-300 leading-relaxed">
+                      {answers[i]}
                     </span>
-                  )}
-                  {questions.map((question: string, index: number) => (
-                    <div key={index} className="text-purple-400">
-                      <span>{question + ": "}</span>
-                      {!answers[index] && loading && (
-                        <Fade>
-                          <span>Typing...</span>
-                        </Fade>
-                      )}
-                      <span className="text-yellow-300">{answers[index]}</span>
+                  </div>
+                ) : (
+                  loading &&
+                  i === questions.length - 1 && (
+                    <div className="flex gap-2 text-[11px] italic text-zinc-600">
+                      <span className="animate-pulse">Analyzing...</span>
                     </div>
-                  ))}
-                  <div ref={endOfMessagesRef}></div>
-                </div>
-                <div className="flex items-center mt-2 gap-2">
-                  <span className="text-yellow-500">{"guest_user "}</span>
-                  <span className="text-green-300"> {"in "}</span>
-                  <span className="text-purple-500">~: </span>
-                  <input
-                    className="text-white bg-black w-auto flex-1 border-0 focus:outline-none caret-green-500 ml-2"
-                    value={currentQuestion}
-                    onChange={(e) => setCurrentQuestion(e.target.value)}
-                    placeholder="Type here..."
-                  />
-                </div>
+                  )
+                )}
               </div>
+            ))}
+            <div ref={endOfMessagesRef} />
+          </div>
+
+          {/* Input Area */}
+          <div className="p-4 bg-white/5 border-t border-white/5">
+            <div className="flex items-center gap-2 text-[11px]">
+              <span className="text-green-500 break-keep">~</span>
+              <input
+                autoFocus
+                className="flex-1 bg-transparent border-none outline-none text-zinc-100 placeholder:text-zinc-700 caret-green-500"
+                value={currentQuestion}
+                onChange={(e) => setCurrentQuestion(e.target.value)}
+                placeholder="Submit query..."
+                onKeyDown={(e) => e.key === "Enter" && handleRun()}
+              />
+              <span className="text-[10px] text-zinc-600">ENTER</span>
             </div>
           </div>
         </motion.div>

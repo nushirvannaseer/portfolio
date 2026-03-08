@@ -25,14 +25,48 @@ import PGSQLIcon from "@/app/assets/icons/PGSQL.svg";
 import YTMusic from "@/app/assets/icons/YTMusic.svg";
 import SpotifyIcon from "@/app/assets/icons/Spotify.svg";
 import TailwindIcon from "@/app/assets/icons/Tailwind.svg";
+import GraphQLIcon from "@/app/assets/icons/GraphQL.svg";
+import ReduxIcon from "@/app/assets/icons/Redux.svg";
+import FlutterIcon from "@/app/assets/icons/Flutter.svg";
+import PrismaIcon from "@/app/assets/icons/Prisma.svg";
 
 export default async function Home() {
   const projects = await fetchProjects(); // Fetch projects data here
 
   return (
     <>
-      <div className="flex w-full mx-auto ">
-        <div className="flex w-full flex-col lg:flex-row lg:justify-between mx-auto bg-zinc-950 overflow-auto">
+      {/* Aurora background orbs */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div
+          className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%)",
+            animation: "aurora-1 18s ease-in-out infinite",
+            filter: "blur(60px)",
+          }}
+        />
+        <div
+          className="absolute bottom-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)",
+            animation: "aurora-2 24s ease-in-out infinite",
+            filter: "blur(80px)",
+          }}
+        />
+        <div
+          className="absolute top-[40%] right-[20%] w-[400px] h-[400px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(5,150,105,0.06) 0%, transparent 70%)",
+            animation: "aurora-1 30s ease-in-out infinite reverse",
+            filter: "blur(100px)",
+          }}
+        />
+      </div>
+      <div className="flex min-h-screen w-full bg-zinc-950 selection:bg-green-500/30 selection:text-green-200">
+        <div className="flex w-full flex-col lg:flex-row lg:justify-between mx-auto relative max-w-[1600px]">
           <LeftPanel />
           <RightPanel projects={projects} />
         </div>
@@ -48,44 +82,66 @@ async function fetchProjects() {
 
 const projects = [
   {
-    name: "Movezic",
-    link: "https://movezic-app.vercel.app/",
-    image: MovezicImage,
+    name: "Kaleidoscope",
+    link: "https://kscope.ai/", // Assuming a placeholder link if not provided
+    image: null,
     description: [
-      "Music Migration Application",
-      "Personal Project. Currently working on further features to add to the application",
-      "Utilizes the Spotify and YouTube Music APIs to migrate music or playlists from one account to another",
+      "Core contributor to a highly configurable enterprise dashboard and automated insights platform",
+      "Architected an end-to-end data correlations bot utilizing the AWS SDK for GoLang, AWS Neptune, and GraphQL",
+      "Drastically improved application performance, reducing load times to under 2s by migrating logic to Redux",
+      "Fortified system security by implementing SSO/MFA via AWS Cognito and upgrading AWS Amplify",
     ],
     date: {
-      start: new Date("2024-9-17"),
+      start: new Date("2025-04-01"),
       end: null,
     },
-    roles: ["Primary Software Engineer"],
-    interestingFact: {
-      text: "",
-      icon: null,
-    },
+    roles: ["Full Stack Engineer"],
     techStack: [
-      {
-        logo: NextIcon,
-        name: "NextJS",
-      },
-      {
-        logo: FlaskIcon,
-        name: "Flask",
-      },
-      {
-        logo: TailwindIcon,
-        name: "TailwindCSS",
-      },
-      {
-        logo: YTMusic,
-        name: "YTMusic API",
-      },
-      {
-        logo: SpotifyIcon,
-        name: "Spotify API",
-      },
+      { logo: AWSIcon, name: "AWS" },
+      { logo: GraphQLIcon, name: "GraphQL" },
+      { logo: ReduxIcon, name: "Redux" },
+      { logo: NodeIcon, name: "Node.js" },
+    ],
+  },
+  {
+    name: "Influnity",
+    link: "https://influnity.com/",
+    image: null,
+    description: [
+      "Application that helps connect Influencers with their audiences and sponsors",
+      "Set up the Turbo Repo for development with TypeScript, Webpack, and Dot-Env Vault",
+      "Designed the architecture on the backend using PostgreSQL, DrizzleOrm and NestJS",
+    ],
+    date: {
+      start: new Date("2024-07-01"),
+      end: new Date("2024-11-01"),
+    },
+    roles: ["Technical Lead"],
+    techStack: [
+      { logo: TSIcon, name: "TypeScript" },
+      { logo: PGSQLIcon, name: "PostgreSQL" },
+      { logo: NestIcon, name: "NestJS" },
+      { logo: AWSIcon, name: "AWS" },
+    ],
+  },
+  {
+    name: "KVet and KDukaan",
+    link: null,
+    image: null,
+    description: [
+      "Standalone apps for potential vets and shop owners to sign up for Waseela’s initiatives",
+      "Built using NextJs, Postgres, TypeORM and NodeJs",
+      "Enabling multiple rural applicants to join Waseela as business owners",
+    ],
+    date: {
+      start: new Date("2024-12-01"),
+      end: new Date("2025-04-01"),
+    },
+    roles: ["Full Stack Engineer"],
+    techStack: [
+      { logo: NextIcon, name: "Next.js" },
+      { logo: PGSQLIcon, name: "PostgreSQL" },
+      { logo: NodeIcon, name: "Node.js" },
     ],
   },
   {
@@ -93,36 +149,20 @@ const projects = [
     link: "https://chromewebstore.google.com/detail/profilepro/gllhamnkpecmfhgdbildlgbbopofnnoe",
     image: ProfileProImage,
     description: [
-      "Google Business Optimization Chrome Extension",
-      "Worked as the primary developer on the extension for 3 months",
-      "Currently managing a team of 3 developers for updates and maintenance",
+      "Google Business Optimization Chrome Extension with 10K+ active users",
+      "Engineered and launched a Chrome extension built with React, MongoDB, Express, and Node.js",
+      "Spearheaded phase 1 UI development using Material UI, integrating seamless modals and pop-ups",
     ],
     date: {
-      start: new Date("2023-1-2"),
-      end: null,
+      start: new Date("2023-01-01"),
+      end: new Date("2024-11-01"),
     },
     roles: ["Project Manager", "Software Engineer"],
-    interestingFact: {
-      text: "9000+ downloads and rated 4.9 stars",
-      icon: null,
-    },
     techStack: [
-      {
-        logo: ReactIcon,
-        name: "ReactJS",
-      },
-      {
-        logo: NestIcon,
-        name: "NodeJS",
-      },
-      {
-        logo: MongoDBIcon,
-        name: "MongoDB",
-      },
-      {
-        logo: AWSIcon,
-        name: "AWS",
-      },
+      { logo: ReactIcon, name: "ReactJS" },
+      { logo: NodeIcon, name: "NodeJS" },
+      { logo: MongoDBIcon, name: "MongoDB" },
+      { logo: AWSIcon, name: "AWS" },
     ],
   },
   {
@@ -130,130 +170,42 @@ const projects = [
     link: "https://app.satoshisindex.com",
     image: SatoshisIndexImage,
     description: [
-      "Cryptocurrency Buying Automation Tool",
-      "Migrated the initial version of the platform from Grafana to ReactJS and NestJS",
-      "Implemented payments with Stripe, and then later with Maverick Payments",
-      "Currently managing a team of 2 developers for site updates and maintenance",
+      "Cryptocurrency Buying Automation Tool and migration from Grafana",
+      "Led the development and migration of Satoshi’s Index to a React and NestJS-based web app",
+      "Managed migration of over 1,000 users to Amazon RDS (PGSQL) and integrated Stripe/Maverick",
     ],
     date: {
-      start: new Date("2022-9-2"),
-      end: null,
+      start: new Date("2022-09-01"),
+      end: new Date("2024-11-01"),
     },
     roles: ["Project Manager", "Software Engineer"],
     techStack: [
-      {
-        logo: ReactIcon,
-        name: "React JS",
-      },
-      {
-        logo: NestIcon,
-        name: "Nest JS",
-      },
-      {
-        logo: PGSQLIcon,
-        name: "PostgreSQL",
-      },
-      {
-        logo: AWSIcon,
-        name: "AWS",
-      },
+      { logo: ReactIcon, name: "React JS" },
+      { logo: NestIcon, name: "Nest JS" },
+      { logo: PGSQLIcon, name: "PostgreSQL" },
+      { logo: AWSIcon, name: "AWS" },
     ],
   },
   {
-    name: "BeltwayBrief",
-    link: "http://beltwaybrief.com",
-    image: BeltwayBriefImage,
+    name: "Movezic",
+    link: "https://movezic-app.vercel.app/",
+    image: MovezicImage,
     description: [
-      "Designed the architecture for a GPT based poltical newsletter summarizer",
-      "Advised on the usage of NLP tools and tech",
-      "Oversaw the development of the project and successfull delivery to the client",
+      "Music Migration Application using Spotify and YouTube Music APIs",
+      "Developed a music migration tool using NextJs and Flask",
+      "Allows users to move playlists from one platform to another without hassle",
     ],
     date: {
-      start: new Date("2023-6-2"),
-      end: new Date("2024-1-2"),
+      start: new Date("2024-09-17"),
+      end: null,
     },
-    roles: ["Tech lead", "Project Manager"],
+    roles: ["Primary Software Engineer"],
     techStack: [
-      {
-        logo: FlaskIcon,
-        name: "Flask",
-      },
-      {
-        logo: PythonIcon,
-        name: "Python",
-      },
-      {
-        logo: AWSIcon,
-        name: "AWS",
-      },
-      {
-        logo: MongoDBIcon,
-        name: "MongoDB",
-      },
-    ],
-  },
-  {
-    name: "PreCD34+ Calculator",
-    link: "https://precd34.com",
-    image: MLCalculatorImage,
-    description: [
-      "Developed a front-end solution for AI Models used to calculate PreCD34+ Levels in patients",
-      "Developed the backend and modified the Deep Learning algorithms to be compatible with Flask",
-      "Deployed the project to AWS and successfully delivery the web app to the client",
-    ],
-    date: {
-      start: new Date("2023-11-2"),
-      end: new Date("2023-11-2"),
-    },
-    roles: ["Software Engineer"],
-    techStack: [
-      {
-        logo: FlaskIcon,
-        name: "Flask",
-      },
-      {
-        logo: PythonIcon,
-        name: "Python",
-      },
-      {
-        logo: AWSIcon,
-        name: "AWS",
-      },
-      {
-        logo: TensorFlowIcon,
-        name: "MongoDB",
-      },
-    ],
-  },
-  {
-    name: "NousTalk",
-    link: "https://noustalk.com/",
-    image: NousTalkImage,
-
-    description: [
-      "Collaborated with MythicTech and a team of upto 10 people",
-      "Lead the Ripeseed team for fixes on the application",
-      "Redesigned the UI side for both therapists and clients in React",
-      "Implemented multiple booking related fixes and updates to the Node and .NET backends",
-    ],
-    date: {
-      start: new Date("2022-3-2"),
-      end: new Date("2022-5-2"),
-    },
-    roles: ["Software Engineer", "RS Team Lead"],
-    techStack: [
-      {
-        logo: ReactIcon,
-        name: "React JS",
-      },
-      {
-        logo: NodeIcon,
-        name: "Node JS",
-      },
-      {
-        logo: DockerIcon,
-        name: "Docker",
-      },
+      { logo: NextIcon, name: "NextJS" },
+      { logo: FlaskIcon, name: "Flask" },
+      { logo: TailwindIcon, name: "TailwindCSS" },
+      { logo: YTMusic, name: "YTMusic API" },
+      { logo: SpotifyIcon, name: "Spotify API" },
     ],
   },
   {
@@ -261,33 +213,80 @@ const projects = [
     link: "https://chromewebstore.google.com/detail/appointmentcore-plugin-fo/mmjcajbhlpjbaegiliagmjaapfkicjml",
     image: AppointmentCoreImage,
     description: [
-      "Appointment Booking application and Chrome plugin",
-      "Completely redesigned the frontend of the application in React Native Web",
-      "Implemented booking schedule fixes using moment.js",
+      "Appointment Booking application and Chrome plugin with 5+ developers",
+      "Redesigned the frontend in React and improved user experience",
       "Implemented robust integrations with Salesforce, Gmail, Outlook and Keepa",
     ],
     date: {
-      start: new Date("2021-9-2"),
-      end: new Date("2022-2-2"),
-    },
-    interestingFact: {
-      text: "1000+ downloads and rated 4.4 stars",
-      icon: null,
+      start: new Date("2021-09-01"),
+      end: new Date("2022-02-01"),
     },
     roles: ["Software Engineer"],
     techStack: [
-      {
-        logo: ReactIcon,
-        name: "React JS",
-      },
-      {
-        logo: NodeIcon,
-        name: "Node JS",
-      },
-      {
-        logo: TSIcon,
-        name: "TypeScript",
-      },
+      { logo: ReactIcon, name: "React JS" },
+      { logo: NodeIcon, name: "Node JS" },
+      { logo: TSIcon, name: "TypeScript" },
+    ],
+  },
+  {
+    name: "Crypto AI Forecasts",
+    link: null,
+    image: null,
+    description: [
+      "AI-driven trading solutions for novice and intermediate crypto traders",
+      "Sole developer of the mobile app providing real-time forecasts",
+      "Built using React Native and the Ignite Boilerplate",
+    ],
+    date: {
+      start: new Date("2024-08-01"), // Approximate date based on context
+      end: new Date("2024-09-01"),
+    },
+    roles: ["Sole Developer"],
+    techStack: [
+      { logo: ReactIcon, name: "React Native" },
+      { logo: NodeIcon, name: "Node JS" },
+      { logo: AWSIcon, name: "AWS" },
+    ],
+  },
+  {
+    name: "BeltwayBrief",
+    link: "http://beltwaybrief.com",
+    image: BeltwayBriefImage,
+    description: [
+      "GPT based political newsletter summarizer architecture and NLP advisory",
+      "Automated the delivery of newsletter to subscribed clients using Gmail and Sendgrid",
+      "Oversaw development and successful delivery using Flask, Langchain and OpenAI",
+    ],
+    date: {
+      start: new Date("2023-06-01"),
+      end: new Date("2024-01-01"),
+    },
+    roles: ["Tech lead", "Project Manager"],
+    techStack: [
+      { logo: FlaskIcon, name: "Flask" },
+      { logo: PythonIcon, name: "Python" },
+      { logo: AWSIcon, name: "AWS" },
+      { logo: MongoDBIcon, name: "MongoDB" },
+    ],
+  },
+  {
+    name: "NousTalk",
+    link: "https://noustalk.com/",
+    image: NousTalkImage,
+    description: [
+      "Online platform for scheduling and communicating with licensed therapists",
+      "Resolved scheduling issues and implemented UI updates to improve user experience",
+      "Worked with both a legacy .NET/C# system and a new Node.js backend",
+    ],
+    date: {
+      start: new Date("2022-03-01"),
+      end: new Date("2022-05-01"),
+    },
+    roles: ["Software Engineer"],
+    techStack: [
+      { logo: ReactIcon, name: "React JS" },
+      { logo: NodeIcon, name: "Node JS" },
+      { logo: DockerIcon, name: "Docker" },
     ],
   },
 ];

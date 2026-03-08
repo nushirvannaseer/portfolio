@@ -31,7 +31,7 @@ export const cloudProps: Omit<ICloud, "children"> = {
     initial: [0.1, -0.1],
     clickToFront: 500,
     tooltipDelay: 0,
-    outlineColour: "black",
+    outlineColour: "green",
     maxSpeed: 0.05,
     minSpeed: 0.02,
     dragControl: true,
@@ -39,7 +39,7 @@ export const cloudProps: Omit<ICloud, "children"> = {
 };
 
 export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
-  const bgHex = theme === "light" ? "#f3f2ef" : "#080510";
+  const bgHex = theme === "light" ? "#f23444" : "#080510";
   const fallbackHex = theme === "light" ? "#6e6e73" : "#ffffff";
   const minContrastRatio = theme === "dark" ? 0 : 0;
 
@@ -76,7 +76,7 @@ export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
     if (!data) return null;
 
     return Object.values(data.simpleIcons).map((icon) =>
-      renderCustomIcon(icon, theme || "light")
+      renderCustomIcon(icon, theme || "dark")
     );
   }, [data, theme]);
 

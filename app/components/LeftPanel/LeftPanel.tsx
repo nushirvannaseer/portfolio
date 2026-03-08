@@ -1,94 +1,137 @@
+"use client";
 import React from "react";
 import Info from "./Info/Info";
-import Image from "next/image";
 import PhoneIcon from "@/app/assets/icons/Phone.svg";
 import EmailIcon from "@/app/assets/icons/Email.svg";
 import GithubIcon from "@/app/assets/icons/Github.svg";
 import InstagramIcon from "@/app/assets/icons/Instagram.svg";
-import DevIcon from "@/app/assets/icons/Dev.svg";
 import LinkedInIcon from "@/app/assets/icons/LinkedIn.svg";
 import Link from "next/link";
 import ScrollLink from "../ScrollLink/ScrollLink";
 import ChatBot from "../ChatBot/page";
 import Name from "./Name";
+import { motion } from "framer-motion";
+
+const navItems = [
+  { id: "about", label: "ABOUT", num: "01" },
+  { id: "experience", label: "EXPERIENCE", num: "02" },
+  { id: "projects", label: "PROJECTS", num: "03" },
+  { id: "skills", label: "SKILLS", num: "04" },
+  { id: "education", label: "EDUCATION", num: "05" },
+];
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.3 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
 
 const LeftPanel = () => {
   return (
-    <div className="lg:h-full flex my-auto w-full lg:w-[40%] p-5 h-full sm:h-[70%] flex-wrap flex-row lg:sticky lg:top-0">
+    <div className="lg:h-screen w-full lg:w-[40%] xl:w-[32%] p-6 lg:sticky lg:top-0 flex items-center justify-center">
       <ChatBot />
-      <div className="flex flex-col align-middle mx-auto sm:mx-0 lg:mx-auto my-auto">
-        <h1 className="hidden">nushirvan naseer</h1>
-        <Name />
-        <span className="text-md my-2 mb-5 font-mono mx-auto">
-          software engineer at ripeseed.io
-        </span>
-        <hr />
-        <div className="flex flex-row mx-auto gap-5 mt-5 font-mono text-xs text-center">
-          <ScrollLink scroll={true} href="#about">
-            about me
-          </ScrollLink>
-          <ScrollLink scroll={true} href="#projects">
-            projects
-          </ScrollLink>
-          <ScrollLink scroll={true} href="#skills">
-            skills
-          </ScrollLink>
-        </div>
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        animate="show"
+        className="w-full h-fit max-h-[90vh] flex flex-col items-center lg:items-start text-center lg:text-left p-8 rounded-[2rem] border border-white/10 bg-zinc-900/50 backdrop-blur-xl shadow-2xl relative overflow-hidden"
+      >
+        {/* Decorative glow */}
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-green-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <Image
-          height={200}
-          src={DevIcon}
-          alt="devicon"
-          className="mx-auto sm:hidden lg:flex mt-5"
-        />
-        <div className="flex flex-wrap flex-col mt-5 overflow-ellipsis justify-start">
-          <Link
-            href="/files/nushirvans-resume.pdf"
-            target="_blank"
-            className="my-5 rounded-md bg-green-800 hover:bg-green-900 p-2 w-[50%] mx-auto text-center"
+        <div className="relative z-10 flex flex-col h-full w-full">
+          <motion.div variants={fadeUp}>
+            <h1 className="hidden">nushirvan naseer</h1>
+            <Name />
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            className="flex items-center justify-center lg:justify-start gap-2 my-2 mb-6"
           >
-            Resume
-          </Link>
-          <div className="flex flex-wrap flex-row justify-center my-auto">
-            <Info
-              icon={EmailIcon}
-              title={"Email"}
-              text={"nushirvannaseer@gmail.com"}
-              link={"mailto:nushirvannaseer@gmail.com"}
-            />
-            <Info
-              icon={PhoneIcon}
-              title={"Contact"}
-              text={"+923200435969"}
-              link={"tel:+923200435969"}
-            />
-            <Info
-              icon={GithubIcon}
-              title={"Github"}
-              text={"github.com/nushirvannaseer"}
-              link={"https://github.com/nushirvannaseer"}
-            />
-            <Info
-              icon={LinkedInIcon}
-              title={"Linkedin"}
-              text={"https://linkedin.com/in/nushirvan-naseer"}
-              link={"https://linkedin.com/in/nushirvan-naseer"}
-            />
-            <Info
-              icon={InstagramIcon}
-              title={"Instagram"}
-              text={"@nush0w0rvan"}
-              link={"https://www.instagram.com/nush0w0rvan"}
-            />
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]" />
+            <span className="text-sm font-mono text-zinc-400 capitalize">
+              Senior Software Engineer
+            </span>
+          </motion.div>
+
+          <motion.nav
+            variants={fadeUp}
+            className="flex flex-wrap lg:flex-col gap-1 mb-8 font-mono text-xs"
+          >
+            {navItems.map(({ id, label, num }) => (
+              <ScrollLink
+                key={id}
+                scroll={true}
+                href={`#${id}`}
+                className="py-2 px-2 flex items-center gap-3 rounded-lg transition-all duration-300 text-zinc-500 hover:text-green-400"
+              >
+                <span className="text-[9px] opacity-30">{num}</span>
+                <span className="tracking-widest text-[10px] font-bold">
+                  {label}
+                </span>
+              </ScrollLink>
+            ))}
+          </motion.nav>
+
+          <div className="mt-auto space-y-8 w-full">
+            <motion.div variants={fadeUp}>
+              <Link
+                href="/files/nushirvans-resume.pdf"
+                target="_blank"
+                className="relative inline-flex h-12 overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-zinc-900 group/btn w-full sm:w-[200px]"
+              >
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#22c55e_0%,#052e16_50%,#22c55e_100%)]" />
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-zinc-950 px-6 py-1 text-sm font-medium text-white backdrop-blur-3xl transition-all group-hover/btn:bg-zinc-900">
+                  View Resume
+                </span>
+              </Link>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="flex flex-col gap-3">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                <Info
+                  icon={EmailIcon}
+                  title={"Email"}
+                  text={""}
+                  link={"mailto:nushirvannaseer@gmail.com"}
+                />
+                <Info
+                  icon={PhoneIcon}
+                  title={"Call"}
+                  text={""}
+                  link={"tel:+923200435969"}
+                />
+                <Info
+                  icon={GithubIcon}
+                  title={"Github"}
+                  text={""}
+                  link={"https://github.com/nushirvannaseer"}
+                />
+                <Info
+                  icon={LinkedInIcon}
+                  title={"LinkedIn"}
+                  text={""}
+                  link={"https://linkedin.com/in/nushirvan-naseer"}
+                />
+                <Info
+                  icon={InstagramIcon}
+                  title={"Instagram"}
+                  text={""}
+                  link={"https://www.instagram.com/nush0w0rvan"}
+                />
+              </div>
+              <p className="text-[10px] font-mono text-zinc-600 mt-4 italic">
+                {`Building scalable solutions at the speed of thought`}
+              </p>
+            </motion.div>
           </div>
         </div>
-      </div>
-      <Image
-        height={200}
-        src={DevIcon}
-        alt="devicon"
-        className="hidden sm:block sm:mx-auto lg:hidden"
-      />
+      </motion.div>
     </div>
   );
 };
