@@ -24,14 +24,17 @@ interface OmnitrixProps {
 const Omnitrix = ({ items }: OmnitrixProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDialUp, setIsDialUp] = useState(false);
+  const [dialSpin, setDialSpin] = useState(0);
 
   const active = items[activeIndex];
 
   const handleNext = () => {
+    setDialSpin((prev) => prev + 90);
     setActiveIndex((prev) => (prev + 1) % items.length);
   };
 
   const handlePrev = () => {
+    setDialSpin((prev) => prev - 90);
     setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
   };
 
@@ -56,7 +59,7 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.8 }}
-              className="w-full max-w-sm h-72 p-5 bg-accent/10 border border-accent/40 rounded-xl shadow-[0_0_40px_rgba(var(--accent-color),0.4)] backdrop-blur-md flex flex-col items-start justify-start text-left overflow-hidden pointer-events-auto"
+              className="w-full max-w-sm h-[19rem] pt-5 px-5 pb-8 bg-accent/5 border border-accent/40 rounded-xl shadow-[0_0_40px_rgba(var(--accent-color),0.4)] backdrop-blur-md flex flex-col items-start justify-start text-left overflow-hidden pointer-events-auto"
             >
               {/* One-shot scan line — sweeps top to bottom, reveals card content */}
               <motion.div
@@ -114,7 +117,7 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
                 </div>
 
                 {/* Bullet Points */}
-                <ul className="mt-3 w-full space-y-1.5 overflow-y-auto flex-1 text-left scrollbar-hide">
+                <ul className="mt-3 w-full space-y-1.5 overflow-y-auto text-left scrollbar-hide">
                   {active.description.map((point, i) => (
                     <li
                       key={i}
@@ -125,6 +128,8 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
                     </li>
                   ))}
                 </ul>
+                {/* Bottom spacer — always visible gap */}
+                <div className="h-6 shrink-0" />
               </motion.div>
             </motion.div>
 
@@ -132,13 +137,13 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
             <div className="mt-2 relative w-80 h-28">
               {/* Shaped beam */}
               <div
-                className="absolute h-16 inset-0 bg-gradient-to-t from-accent/80 via-accent/20 to-transparent blur-sm"
+                className="absolute h-14 inset-0 bg-gradient-to-t from-accent/30 via-accent/10 to-transparent blur-sm"
                 style={{ clipPath: "polygon(0 0, 100% 0, 65% 100%, 35% 100%)" }}
               />
               {/* Blurry bottom base glow — inner tight glow */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-12 bg-accent/80 blur-3xl rounded-full" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-12 bg-accent/50 blur-3xl rounded-full" />
               {/* Blurry bottom base glow — outer soft halo */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-8 bg-accent/40 blur-3xl rounded-full" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-8 bg-accent/50 blur-3xl rounded-full" />
             </div>
           </motion.div>
         )}
@@ -172,9 +177,14 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
           rotateX: isDialUp ? 70 : 0,
           y: isDialUp ? 150 : 0,
           scale: isDialUp ? 0.9 : 1,
+          rotateZ: dialSpin,
         }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className={`relative w-56 h-56 rounded-full bg-zinc-800 border-[12px] border-zinc-700 flex items-center justify-center z-10 transition-shadow duration-500 ${isDialUp ? "shadow-[0_20px_50px_rgba(var(--accent-color),0.3)]" : "shadow-2xl"}`}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 18,
+        }}
+        className={`relative w-56 h-56 rounded-full bg-zinc-800 border-[12px] border-zinc-700 flex items-center justify-center z-10 transition-shadow duration-500 ${isDialUp ? "shadow-[inset_0_3px_6px_rgba(255,255,255,0.08),inset_0_-4px_10px_rgba(0,0,0,0.7),0_20px_50px_rgba(var(--accent-color),0.3)]" : "shadow-[inset_0_3px_6px_rgba(255,255,255,0.08),inset_0_-4px_10px_rgba(0,0,0,0.7),0_8px_32px_rgba(0,0,0,0.8)]"}`}
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* 3D Depth Layers — visible as cylinder edge when tilted */}
@@ -187,13 +197,30 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
         ))}
 
         {/* 4 Green Dots Around Dial */}
-        <div className="absolute top-[-16px] w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
-        <div className="absolute bottom-[-16px] w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
-        <div className="absolute left-[-16px] w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
-        <div className="absolute right-[-16px] w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
+        <div className="absolute top-[-16px] z-96 w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
+        <div className="absolute bottom-[-16px] z-96 w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
+        <div className="absolute left-[-16px] z-96 w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
+        <div className="absolute right-[-16px] z-96 w-6 h-6 rounded-full bg-accent border-[1px] border-zinc-900 shadow-[0_0_10px_rgba(var(--accent-color),0.8)]" />
+
+        {/* Metallic rim highlight — top-left specular sheen */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none z-20"
+          style={{
+            background:
+              "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 40%, transparent 70%)",
+          }}
+        />
+        {/* Bottom rim shadow to reinforce curvature */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none z-20"
+          style={{
+            background:
+              "radial-gradient(ellipse at 60% 80%, rgba(0,0,0,0.5) 0%, transparent 60%)",
+          }}
+        />
 
         {/* Black Inner Dial background */}
-        <div className="w-[180px] h-[180px] rounded-full bg-zinc-900 border-[8px] border-zinc-800 flex items-center justify-center relative overflow-hidden shadow-[inset_0_0_15px_rgba(0,0,0,1)]">
+        <div className="w-[180px] h-[180px] rounded-full bg-zinc-900 border-[8px] border-zinc-800 flex items-center justify-center relative overflow-hidden shadow-[inset_0_4px_8px_rgba(0,0,0,0.9),inset_0_-2px_4px_rgba(255,255,255,0.05),0_0_20px_rgba(0,0,0,0.8)]">
           {/* Glowing Green Base */}
           <div className="absolute w-full h-full bg-accent" />
 
