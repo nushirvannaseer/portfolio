@@ -230,7 +230,7 @@ const projects = [
   },
   {
     name: "Crypto AI Forecasts",
-    link: null,
+    link: "https://play.google.com/store/apps/details?id=io.ripeseed.cryptoforecastapp",
     image: null,
     description: [
       "AI-driven trading solutions for novice and intermediate crypto traders",
