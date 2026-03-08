@@ -7,8 +7,9 @@ import {
   Briefcase,
   Code2,
   GraduationCap,
-  MessageSquare,
+  Cpu,
   Bot,
+  Trophy,
 } from "lucide-react";
 
 interface DockProps {
@@ -22,9 +23,14 @@ const Dock = ({ windows, onOpen, activeId }: DockProps) => {
     { id: "about", icon: <User size={20} />, label: "About" },
     { id: "experience", icon: <Briefcase size={20} />, label: "Career" },
     { id: "projects", icon: <Code2 size={20} />, label: "Projects" },
-    { id: "skills", icon: <MessageSquare size={20} />, label: "Skills" },
+    { id: "skills", icon: <Cpu size={20} />, label: "Skills" },
     { id: "education", icon: <GraduationCap size={20} />, label: "Academic" },
     { id: "assistant", icon: <Bot size={20} />, label: "AI Assistant" },
+    {
+      id: "chess",
+      icon: <Trophy size={20} />,
+      label: "Chess vs Nushirvan (1300 Elo)",
+    },
   ];
 
   return (

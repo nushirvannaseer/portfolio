@@ -18,6 +18,7 @@ import {
   ArrowRight,
   Zap,
   Layout,
+  Trophy,
 } from "lucide-react";
 
 const navItems = [
@@ -133,12 +134,16 @@ const CommandMenu = () => {
     const newState = !desktopMode;
     setDesktopMode(newState);
     localStorage.setItem("nush-desktop-mode", newState.toString());
-    setOpen(false);
 
     // Dispatch a custom event so other components can react
     window.dispatchEvent(
       new CustomEvent("toggle-desktop-mode", { detail: newState }),
     );
+  };
+
+  const openWindow = (id: string) => {
+    window.dispatchEvent(new CustomEvent("open-window", { detail: id }));
+    setOpen(false);
   };
 
   const runCommand = useCallback((command: () => void) => {
@@ -155,24 +160,49 @@ const CommandMenu = () => {
 
   return (
     <>
-      {/* Global Shortcut Badge (Fixed Top Right) */}
-      <div
-        className="fixed top-6 right-6 z-[60] hidden lg:flex items-center gap-3 px-3 py-1.5 rounded-full border border-white/5 bg-zinc-900/40 backdrop-blur-md group cursor-pointer hover:border-accent/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-2xl"
-        onClick={() => setOpen(true)}
-      >
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse shadow-[0_0_8px_rgba(var(--accent-color),1)]" />
-          <span className="text-[10px] font-mono text-zinc-500 group-hover:text-zinc-300 transition-colors uppercase tracking-wider">
-            Terminal
-          </span>
-        </div>
-        <div className="flex items-center gap-1 border-l border-white/10 pl-3">
-          <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-zinc-800 text-[9px] font-mono text-zinc-500 shadow-sm">
-            ⌘
-          </kbd>
-          <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-zinc-800 text-[9px] font-mono text-zinc-500 shadow-sm">
-            K
-          </kbd>
+      {/* Global Shortcut Badges (Fixed Top Right) */}
+      <div className="fixed top-6 right-6 z-[60] flex items-center gap-3">
+        {/* DEX Toggle Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={toggleDesktop}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-zinc-900/40 backdrop-blur-md group cursor-pointer hover:border-accent/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-2xl"
+        >
+          <div className="flex items-center gap-2">
+            <Layout
+              size={14}
+              className={
+                desktopMode
+                  ? "text-accent"
+                  : "text-zinc-500 group-hover:text-zinc-300"
+              }
+            />
+            <span className="text-[10px] font-mono text-zinc-500 group-hover:text-zinc-300 transition-colors uppercase tracking-wider">
+              {desktopMode ? "Exit DEX" : "DEX Mode"}
+            </span>
+          </div>
+        </motion.button>
+
+        {/* Terminal Badge */}
+        <div
+          className="hidden lg:flex items-center gap-3 px-3 py-1.5 rounded-full border border-white/5 bg-zinc-900/40 backdrop-blur-md group cursor-pointer hover:border-accent/40 hover:bg-zinc-900/80 transition-all duration-300 shadow-2xl"
+          onClick={() => setOpen(true)}
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse shadow-[0_0_8px_rgba(var(--accent-color),1)]" />
+            <span className="text-[10px] font-mono text-zinc-500 group-hover:text-zinc-300 transition-colors uppercase tracking-wider">
+              Terminal
+            </span>
+          </div>
+          <div className="flex items-center gap-1 border-l border-white/10 pl-3">
+            <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-zinc-800 text-[9px] font-mono text-zinc-500 shadow-sm">
+              ⌘
+            </kbd>
+            <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-zinc-800 text-[9px] font-mono text-zinc-500 shadow-sm">
+              K
+            </kbd>
+          </div>
         </div>
       </div>
 
@@ -274,6 +304,32 @@ const CommandMenu = () => {
                 <Command.Group
                   heading={
                     <span className="px-2 pb-2 pt-1 text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
+                      Games
+                    </span>
+                  }
+                >
+                  <Command.Item
+                    onSelect={() => {
+                      if (!desktopMode) toggleDesktop();
+                      setTimeout(() => openWindow("chess"), 100);
+                    }}
+                    className="group flex cursor-default select-none items-center gap-3 rounded-xl px-3 py-3 text-sm text-zinc-400 outline-none aria-selected:bg-zinc-800 aria-selected:text-zinc-100 transition-all font-mono"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/5 bg-zinc-900 group-aria-selected:border-accent/30 group-aria-selected:text-accent">
+                      <Trophy size={16} />
+                    </div>
+                    <span>Play Chess vs Nushirvan (1300 ELO)</span>
+                    <span className="ml-auto text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-accent/10 text-accent uppercase tracking-tighter shadow-sm shadow-accent/20">
+                      New
+                    </span>
+                  </Command.Item>
+                </Command.Group>
+
+                <Command.Separator className="h-px bg-white/5 my-2" />
+
+                <Command.Group
+                  heading={
+                    <span className="px-2 pb-2 pt-1 text-[10px] font-bold tracking-widest text-zinc-500 uppercase">
                       Quick Actions
                     </span>
                   }
@@ -339,7 +395,7 @@ const CommandMenu = () => {
                       <Layout size={16} />
                     </div>
                     <span>
-                      {desktopMode ? "Exit Desktop Mode" : "Enter Nush-OS Mode"}
+                      {desktopMode ? "Exit DEX Mode" : "Enter DEX Mode"}
                     </span>
                     <div className="ml-auto flex items-center gap-1.5 text-[10px] text-zinc-500 opacity-0 group-aria-selected:opacity-100 transition-opacity">
                       Type &quot;desktop&quot;{" "}

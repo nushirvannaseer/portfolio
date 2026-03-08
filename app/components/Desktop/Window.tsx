@@ -66,9 +66,6 @@ const DesktopWindow = ({
           >
             <Minus size={14} />
           </button>
-          <button className="p-1 hover:bg-white/5 rounded transition-colors text-zinc-500">
-            <Square size={10} />
-          </button>
           <button
             onClick={onClose}
             className="p-1 hover:bg-red-500/20 hover:text-red-400 rounded transition-all text-zinc-500"

@@ -8,7 +8,8 @@ import Experience from "./components/Experience/Experience";
 import Projects from "./components/Projects/Projects";
 import Skills from "./components/Skills/Skills";
 import SkillBox from "./components/RightPanel/SkillBox/SkillBox";
-import Chatbot from "./components/ChatBot/page";
+import Chatbot from "./components/ChatBot/ChatBot";
+import ChessGame from "./components/Chess/ChessGame";
 import ReactIcon from "@/app/assets/icons/React.svg";
 import FlaskIcon from "@/app/assets/icons/Flask.svg";
 import NodeIcon from "@/app/assets/icons/Node.svg";
@@ -104,6 +105,7 @@ export default function PortfolioContainer({ projects }: { projects: any[] }) {
         </div>
       ),
       assistant: <Chatbot standalone />,
+      chess: <ChessGame />,
     };
 
     return <Desktop childrenMap={childrenMap} />;

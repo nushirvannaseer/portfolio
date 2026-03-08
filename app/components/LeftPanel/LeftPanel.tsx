@@ -8,9 +8,10 @@ import InstagramIcon from "@/app/assets/icons/Instagram.svg";
 import LinkedInIcon from "@/app/assets/icons/LinkedIn.svg";
 import Link from "next/link";
 import ScrollLink from "../ScrollLink/ScrollLink";
-import ChatBot from "../ChatBot/page";
+import Chatbot from "../ChatBot/ChatBot";
 import Name from "./Name";
 import { motion } from "framer-motion";
+import ChessIcon from "@/app/assets/icons/Chess.svg";
 
 const navItems = [
   { id: "about", label: "ABOUT", num: "01" },
@@ -79,6 +80,12 @@ const LeftPanel = ({ isDesktop = false }: LeftPanelProps) => {
               text={""}
               link={"https://linkedin.com/in/nushirvan-naseer"}
             />
+            <Info
+              icon={ChessIcon}
+              title={"Chess profile"}
+              text={""}
+              link={"https://www.chess.com/member/nushirvannaseer"}
+            />
           </div>
         </div>
 
@@ -94,7 +101,7 @@ const LeftPanel = ({ isDesktop = false }: LeftPanelProps) => {
 
   return (
     <div className="lg:h-screen w-full lg:w-[40%] xl:w-[32%] p-6 lg:sticky lg:top-0 flex items-center justify-center">
-      <ChatBot />
+      <Chatbot />
       <motion.div
         variants={stagger}
         initial="hidden"
@@ -184,6 +191,12 @@ const LeftPanel = ({ isDesktop = false }: LeftPanelProps) => {
                   title={"Instagram"}
                   text={""}
                   link={"https://www.instagram.com/nush0w0rvan"}
+                />
+                <Info
+                  icon={ChessIcon}
+                  title={"Chess profile"}
+                  text={""}
+                  link={"https://www.chess.com/member/nushirvannaseer"}
                 />
               </div>
               <p className="text-[10px] font-mono text-zinc-600 mt-4 italic">

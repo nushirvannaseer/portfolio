@@ -18,6 +18,11 @@ const Desktop = ({ childrenMap }: DesktopProps) => {
     { id: "skills", title: "Tech Stack // Skill Matrix", isOpen: false },
     { id: "education", title: "Academic Record", isOpen: false },
     { id: "assistant", title: "AI Assistant // Neural Core", isOpen: false },
+    {
+      id: "chess",
+      title: "Chess // vs Nushirvan (1300 Elo)",
+      isOpen: false,
+    },
   ]);
 
   const [activeId, setActiveId] = useState("about");
@@ -40,6 +45,14 @@ const Desktop = ({ childrenMap }: DesktopProps) => {
       prev.map((w) => (w.id === id ? { ...w, isOpen: false } : w)),
     );
   };
+
+  useEffect(() => {
+    const handleOpenWindow = (e: any) => {
+      openWindow(e.detail);
+    };
+    window.addEventListener("open-window", handleOpenWindow);
+    return () => window.removeEventListener("open-window", handleOpenWindow);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-zinc-950 font-sans">
