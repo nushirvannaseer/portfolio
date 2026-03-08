@@ -41,7 +41,7 @@ const LeftPanel = () => {
         className="w-full h-fit max-h-[90vh] flex flex-col items-center lg:items-start text-center lg:text-left p-8 rounded-[2rem] border border-white/10 bg-zinc-900/50 backdrop-blur-xl shadow-2xl relative overflow-hidden"
       >
         {/* Decorative glow */}
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-green-500/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative z-10 flex flex-col h-full w-full">
           <motion.div variants={fadeUp}>
@@ -53,7 +53,7 @@ const LeftPanel = () => {
             variants={fadeUp}
             className="flex items-center justify-center lg:justify-start gap-2 my-2 mb-6"
           >
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]" />
+            <div className="w-2 h-2 rounded-full bg-accent animate-pulse shadow-[0_0_8px_rgba(var(--accent-color),1)]" />
             <span className="text-sm font-mono text-zinc-400 capitalize">
               Senior Software Engineer
             </span>
@@ -68,7 +68,7 @@ const LeftPanel = () => {
                 key={id}
                 scroll={true}
                 href={`#${id}`}
-                className="py-2 px-2 flex items-center gap-3 rounded-lg transition-all duration-300 text-zinc-500 hover:text-green-400"
+                className="py-2 px-2 flex items-center gap-3 rounded-lg transition-all duration-300 text-zinc-500 hover:text-accent"
               >
                 <span className="text-[9px] opacity-30">{num}</span>
                 <span className="tracking-widest text-[10px] font-bold">
@@ -83,9 +83,9 @@ const LeftPanel = () => {
               <Link
                 href="/files/nushirvans-resume.pdf"
                 target="_blank"
-                className="relative inline-flex h-12 overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-zinc-900 group/btn w-full sm:w-[200px]"
+                className="relative inline-flex h-12 overflow-hidden rounded-xl p-[1px] focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-zinc-900 group/btn w-full sm:w-[200px]"
               >
-                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#22c55e_0%,#052e16_50%,#22c55e_100%)]" />
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,rgba(var(--accent-color),1)_0%,rgba(var(--accent-color),0.2)_50%,rgba(var(--accent-color),1)_100%)]" />
                 <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-xl bg-zinc-950 px-6 py-1 text-sm font-medium text-white backdrop-blur-3xl transition-all group-hover/btn:bg-zinc-900">
                   View Resume
                 </span>

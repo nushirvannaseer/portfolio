@@ -19,7 +19,11 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      colors: {},
+      colors: {
+        accent: "rgba(var(--accent-color), <alpha-value>)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
       animation: {
         orbit: "orbit calc(var(--duration)*1s) linear infinite",
         marquee: "marquee var(--duration) linear infinite",

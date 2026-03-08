@@ -20,7 +20,7 @@ export default function Name() {
           fontFamily: "monospace",
           fontWeight: "bold",
           background:
-            "linear-gradient(90deg, #4ade80, #86efac, #ffffff, #86efac, #4ade80)",
+            "linear-gradient(90deg, rgba(var(--accent-color), 1), rgba(var(--accent-color), 0.7), #ffffff, rgba(var(--accent-color), 0.7), rgba(var(--accent-color), 1))",
           backgroundSize: "200% auto",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",

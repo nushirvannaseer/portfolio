@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import CommandMenu from "./components/CommandMenu/CommandMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -140,7 +141,11 @@ export default function RootLayout({
         />
       </head>
       <Analytics />
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="fixed inset-0 bg-accent/[0.1] pointer-events-none z-[-1]" />
+        <CommandMenu />
+        {children}
+      </body>
     </html>
   );
 }

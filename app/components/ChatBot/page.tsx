@@ -73,7 +73,7 @@ const Chatbot = () => {
           className={`flex items-center justify-center w-12 h-12 rounded-full border border-white/10 shadow-2xl transition-all duration-300 ${
             showChatbot
               ? "bg-zinc-800 rotate-90"
-              : "bg-green-600 hover:bg-green-500 shadow-green-500/20"
+              : "bg-accent hover:opacity-90 shadow-accent/20"
           }`}
         >
           <Image
@@ -96,7 +96,7 @@ const Chatbot = () => {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold">
                 Assistant Interface
               </span>
@@ -111,8 +111,8 @@ const Chatbot = () => {
           <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
             {questions.length === 0 && (
               <div className="h-full flex flex-col items-center justify-center text-center space-y-3 opacity-50">
-                <span className="text-xs text-green-500 italic px-8">
-                  {`"System Ready. Inquire about nushirvan's expertise, stack, or availability."`}
+                <span className="text-xs text-accent italic px-8">
+                  {`System Ready. Inquire about nushirvan's expertise, stack, or availability.`}
                 </span>
               </div>
             )}
@@ -127,8 +127,8 @@ const Chatbot = () => {
                   <span className="text-zinc-100">{q}</span>
                 </div>
                 {answers[i] ? (
-                  <div className="flex gap-2 text-[11px] bg-green-500/5 p-2 rounded-lg border border-green-500/10">
-                    <span className="text-green-500 shrink-0">sys:</span>
+                  <div className="flex gap-2 text-[11px] bg-accent/5 p-2 rounded-lg border border-accent/10">
+                    <span className="text-accent shrink-0">sys:</span>
                     <span className="text-zinc-300 leading-relaxed">
                       {answers[i]}
                     </span>
@@ -149,10 +149,10 @@ const Chatbot = () => {
           {/* Input Area */}
           <div className="p-4 bg-white/5 border-t border-white/5">
             <div className="flex items-center gap-2 text-[11px]">
-              <span className="text-green-500 break-keep">~</span>
+              <span className="text-accent break-keep">~</span>
               <input
                 autoFocus
-                className="flex-1 bg-transparent border-none outline-none text-zinc-100 placeholder:text-zinc-700 caret-green-500"
+                className="flex-1 bg-transparent border-none outline-none text-zinc-100 placeholder:text-zinc-700 caret-accent"
                 value={currentQuestion}
                 onChange={(e) => setCurrentQuestion(e.target.value)}
                 placeholder="Submit query..."

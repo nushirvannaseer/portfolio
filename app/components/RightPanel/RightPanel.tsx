@@ -19,11 +19,11 @@ import { motion } from "framer-motion";
 
 const SectionHeading = ({ id, label }: { id?: string; label: string }) => (
   <div id={id} className="mt-20 mb-6">
-    <h1 className="text-xs uppercase tracking-[0.2em] font-bold text-green-500/70">
+    <h1 className="text-xs uppercase tracking-[0.2em] font-bold text-accent/70">
       {label}
     </h1>
     <motion.div
-      className="h-px bg-green-500/20 mt-2 origin-left"
+      className="h-px bg-accent/20 mt-2 origin-left"
       initial={{ scaleX: 0 }}
       whileInView={{ scaleX: 1 }}
       viewport={{ once: true }}
@@ -70,11 +70,11 @@ const RightPanel = ({ projects }: { projects: any[] }) => {
   return (
     <div className="flex w-full lg:w-[60%] xl:w-[68%] p-8 flex-col pt-[5%] scroll-px-10 pb-32">
       <div id="about" className="mb-6">
-        <h1 className="text-xs uppercase tracking-[0.2em] font-bold text-green-500/70">
+        <h1 className="text-xs uppercase tracking-[0.2em] font-bold text-accent/70">
           ABOUT ME
         </h1>
         <motion.div
-          className="h-px bg-green-500/20 mt-2 origin-left"
+          className="h-px bg-accent/20 mt-2 origin-left"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -109,10 +109,10 @@ const RightPanel = ({ projects }: { projects: any[] }) => {
         <Skills />
       </div>
       <SectionHeading id="education" label="EDUCATION" />
-      <div className="group relative flex flex-col gap-3 p-6 rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md transition-all duration-300 hover:border-green-500/50 hover:bg-zinc-900/60 shadow-xl">
-        <div className="absolute left-0 top-6 w-1 h-6 bg-green-500/20 rounded-r-full transition-all group-hover:h-8 group-hover:bg-green-500" />
+      <div className="group relative flex flex-col gap-3 p-6 rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:bg-zinc-900/60 shadow-xl">
+        <div className="absolute left-0 top-6 w-1 h-6 bg-accent/20 rounded-r-full transition-all group-hover:h-8 group-hover:bg-accent" />
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-1 pl-2">
-          <span className="text-sm font-bold text-zinc-100 group-hover:text-green-400">
+          <span className="text-sm font-bold text-zinc-100 group-hover:text-accent">
             BS Computer Science
           </span>
           <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap text-right">
@@ -121,7 +121,7 @@ const RightPanel = ({ projects }: { projects: any[] }) => {
         </div>
         <div className="pl-2">
           <p className="text-[11px] font-mono text-zinc-400 group-hover:text-zinc-300 transition-colors leading-relaxed flex items-center gap-2">
-            <span className="text-green-500/50">✦</span>
+            <span className="text-accent/50">✦</span>
             Silver Medalist for SGPA of 3.94/4 · CGPA: 3.61/4
           </p>
         </div>

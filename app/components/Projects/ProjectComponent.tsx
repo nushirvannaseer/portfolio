@@ -28,23 +28,23 @@ const Project = ({
     <Link
       href={project.link || "#"}
       target="_blank"
-      className={`group relative flex flex-col h-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-green-500/50 hover:bg-zinc-900/80 hover:shadow-2xl hover:shadow-green-500/10 ${
+      className={`group relative flex flex-col h-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-accent/50 hover:bg-zinc-900/80 hover:shadow-2xl hover:shadow-accent/10 ${
         featured ? "md:flex-row" : ""
       }`}
     >
       {/* Background Glow Effect */}
-      <div className="absolute -inset-px bg-gradient-to-br from-green-500/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="absolute -inset-px bg-gradient-to-br from-accent/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
       <div
         className={`relative flex flex-col p-6 h-full ${featured ? "md:w-full" : ""}`}
       >
         <div className="flex items-start justify-between mb-4">
           <div className="space-y-1">
-            <h3 className="text-lg font-bold text-zinc-100 group-hover:text-green-400 transition-colors">
+            <h3 className="text-lg font-bold text-zinc-100 group-hover:text-accent transition-colors">
               {project.name}
             </h3>
             <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500">
-              <span className="text-green-500/80 uppercase">
+              <span className="text-accent/80 uppercase">
                 {monthNames[project.date.start.getUTCMonth()]}{" "}
                 {project.date.start.getFullYear()}
               </span>
@@ -70,7 +70,7 @@ const Project = ({
           {project.roles.map((role: any, i: number) => (
             <span
               key={i}
-              className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-green-500/10 text-green-500 rounded-full border border-green-500/20"
+              className="px-2 py-0.5 text-[9px] uppercase tracking-wider font-bold bg-accent/10 text-accent rounded-full border border-accent/20"
             >
               {role}
             </span>
@@ -85,7 +85,7 @@ const Project = ({
                 key={i}
                 className="text-[11px] text-zinc-400 font-mono leading-relaxed flex items-start gap-2"
               >
-                <span className="text-green-500 mt-1 shrink-0">›</span>
+                <span className="text-accent mt-1 shrink-0">›</span>
                 {line}
               </li>
             ))}

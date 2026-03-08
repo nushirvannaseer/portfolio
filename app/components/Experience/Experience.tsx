@@ -50,13 +50,13 @@ const Experience = () => {
       {experiences.map((exp, index) => (
         <div
           key={index}
-          className="group relative flex flex-col gap-4 p-6 rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md transition-all duration-300 hover:border-green-500/50 hover:bg-zinc-900/60 hover:shadow-2xl hover:shadow-green-500/5"
+          className="group relative flex flex-col gap-4 p-6 rounded-2xl border border-white/10 bg-zinc-900/40 backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:bg-zinc-900/60 hover:shadow-2xl hover:shadow-accent/5"
         >
           {/* Subtle Indicator */}
-          <div className="absolute left-0 top-6 w-1 h-6 bg-green-500/20 rounded-r-full transition-all group-hover:h-12 group-hover:bg-green-500" />
+          <div className="absolute left-0 top-6 w-1 h-6 bg-accent/20 rounded-r-full transition-all group-hover:h-12 group-hover:bg-accent" />
 
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-1">
-            <h2 className="text-sm font-bold text-zinc-100 group-hover:text-green-400 transition-colors pl-2">
+            <h2 className="text-sm font-bold text-zinc-100 group-hover:text-accent transition-colors pl-2">
               {exp.role}{" "}
               <span className="text-zinc-500 font-normal ml-1">
                 @ {exp.company}
@@ -73,7 +73,7 @@ const Experience = () => {
                 key={i}
                 className="text-[11px] text-zinc-400 font-mono leading-relaxed flex items-start gap-2"
               >
-                <span className="text-green-500/50 mt-1 shrink-0">→</span>
+                <span className="text-accent/50 mt-1 shrink-0">→</span>
                 {desc}
               </li>
             ))}
