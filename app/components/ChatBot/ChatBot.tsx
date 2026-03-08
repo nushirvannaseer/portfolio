@@ -71,7 +71,7 @@ const Chatbot = ({ standalone = false }: { standalone?: boolean }) => {
 
   const ChatContent = (
     <div
-      className={`w-full h-full rounded-2xl border border-white/10 bg-zinc-950/80 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col font-mono ${!standalone ? "fixed left-6 bottom-24 z-50 w-[90vw] md:w-[400px] h-[500px]" : ""}`}
+      className={`w-full h-full rounded-2xl border border-white/10 bg-zinc-950/80 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col font-mono`}
     >
       {/* Header */}
       {!standalone && (
@@ -172,6 +172,7 @@ const Chatbot = ({ standalone = false }: { standalone?: boolean }) => {
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
+          className="fixed left-6 bottom-24 z-50 w-[90vw] md:w-[400px] h-[60vh] md:h-[500px]"
         >
           {ChatContent}
         </motion.div>
