@@ -45,14 +45,46 @@ const Desktop = ({ childrenMap }: DesktopProps) => {
     <div className="fixed inset-0 z-0 overflow-hidden bg-zinc-950 font-sans">
       {/* Chroma Key Filter to remove the green background from the catto */}
       <svg width="0" height="0" className="absolute">
-        <filter id="chromaKey">
+        <filter
+          id="hackerCatFilter"
+          x="-20%"
+          y="-20%"
+          width="140%"
+          height="140%"
+        >
+          {/* 1. Key out the green background */}
           <feColorMatrix
             type="matrix"
             values="1 0 0 0 0
                     0 1 0 0 0
                     0 0 1 0 0
                     0.5 -1.5 0.5 1 0"
+            result="KEYED"
           />
+          {/* 2. Create the outline based on the keyed-out alpha */}
+          <feMorphology
+            in="KEYED"
+            result="DILATED"
+            operator="dilate"
+            radius="2"
+          />
+          <feFlood
+            floodColor="rgb(var(--accent-color))"
+            floodOpacity="1"
+            result="FLOOD"
+          />
+          <feComposite
+            in="FLOOD"
+            in2="DILATED"
+            operator="in"
+            result="OUTLINE"
+          />
+
+          {/* 3. Merge outline and the keyed cat */}
+          <feMerge>
+            <feMergeNode in="OUTLINE" />
+            <feMergeNode in="KEYED" />
+          </feMerge>
         </filter>
       </svg>
 
@@ -79,7 +111,7 @@ const Desktop = ({ childrenMap }: DesktopProps) => {
             className="w-[450px] h-auto"
             style={{
               filter:
-                "url(#chromaKey) drop-shadow(0 0 30px rgba(var(--accent-color), 0.2))",
+                "url(#hackerCatFilter) drop-shadow(0 0 40px rgba(var(--accent-color), 0.3))",
             }}
           />
           <div className="absolute top-4 -right-20 px-4 py-2 bg-zinc-900/90 border border-accent/30 rounded-2xl text-[10px] text-accent font-mono animate-bounce backdrop-blur-md shadow-2xl">
