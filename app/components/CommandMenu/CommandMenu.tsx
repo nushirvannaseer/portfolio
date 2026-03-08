@@ -19,6 +19,7 @@ import {
   Zap,
   Layout,
   Trophy,
+  Cpu,
 } from "lucide-react";
 
 const navItems = [
@@ -43,7 +44,7 @@ const navItems = [
   {
     id: "skills",
     label: "Skills & Tech",
-    icon: <MessageSquare size={16} />,
+    icon: <Cpu size={16} />,
     section: "Skills",
   },
   {
