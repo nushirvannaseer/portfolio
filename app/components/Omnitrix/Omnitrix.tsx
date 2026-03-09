@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // LEGACY — skill cards (kept for reference)
@@ -28,6 +28,8 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
   const [isClosing, setIsClosing] = useState(false);
   const [showFlash, setShowFlash] = useState<"white" | "green" | null>(null);
 
+  const lastHapticX = useRef(0);
+
   const active = items[activeIndex];
 
   const triggerHaptic = (type: "activate" | "deactivate" | "click") => {
@@ -43,8 +45,9 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
         // Power down sequence: long, medium, short pulses
         window.navigator.vibrate([80, 40, 50, 20, 30, 10]);
       } else {
-        // Sharp mechanical click
-        window.navigator.vibrate(12);
+        // Sharp mechanical click - "ratchet" feeling
+        // 2ms pulse, 10ms gap, 2ms pulse
+        window.navigator.vibrate([2, 10, 2]);
       }
     }
   };
@@ -266,7 +269,21 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.01}
+        onDrag={(_, info) => {
+          const threshold = 20;
+          if (Math.abs(info.offset.x - lastHapticX.current) > threshold) {
+            lastHapticX.current = info.offset.x;
+            if (
+              typeof window !== "undefined" &&
+              window.navigator &&
+              window.navigator.vibrate
+            ) {
+              window.navigator.vibrate(5);
+            }
+          }
+        }}
         onDragEnd={(_, info) => {
+          lastHapticX.current = 0;
           const threshold = 50;
           if (info.offset.x < -threshold) {
             handleNext();
