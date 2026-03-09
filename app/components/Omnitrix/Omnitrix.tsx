@@ -26,6 +26,7 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
   const [isDialUp, setIsDialUp] = useState(false);
   const [dialSpin, setDialSpin] = useState(0);
   const [isClosing, setIsClosing] = useState(false);
+  const [isSpinning, setIsSpinning] = useState(false);
   const [showFlash, setShowFlash] = useState<"white" | "green" | null>(null);
 
   const lastHapticX = useRef(0);
@@ -85,19 +86,24 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
       setIsClosing(true);
       playSound("deactivate");
 
-      // Phase 1: Warning (Hologram turns red, starts collapsing) handled by isClosing in JSX
+      // Phase 1 (0-1s): Diamond -> Hourglass transformation (synced with hologram close)
 
-      // Phase 2: Chaos (After 1s, dial starts rapid spin and flash) handled in JSX
+      // Phase 2 (1s-4s): Chaotic spin and flashing colors
+      setTimeout(() => {
+        setIsSpinning(true);
+      }, 1000);
 
-      // End Sequence: After 2s, flash green and snap shut
+      // End Sequence: Final green burst
       setTimeout(() => {
         setShowFlash("green");
         setTimeout(() => {
           setIsDialUp(false);
           setIsClosing(false);
+          setIsSpinning(false);
+          setDialSpin(0); // Reset dial rotation after shut down
           setShowFlash(null);
         }, 300);
-      }, 3200);
+      }, 4000);
     } else {
       playSound("activate");
       setIsDialUp(true);
@@ -145,13 +151,16 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
                 ...(isClosing
                   ? ({ "--accent-color": "239, 68, 68" } as any)
                   : {}),
+                WebkitBackdropFilter: "blur(12px)", // Safari fix
+                transform: "translateZ(0)", // Safari 3D stability
+                willChange: "transform, clip-path",
               }}
             >
               {/* One-shot scan line — sweeps top to bottom, reveals card content */}
               <motion.div
                 key={`scanline-${activeIndex}`}
                 className="absolute inset-x-0 h-0.5 bg-accent z-20 pointer-events-none shadow-[0_0_12px_rgba(var(--accent-color),1)]"
-                style={{ top: 0 }}
+                style={{ top: 0, transform: "translateZ(1px)" }} // Merged props
                 animate={{ top: "100%", opacity: [1, 1, 0] }}
                 transition={{
                   duration: 0.7,
@@ -296,12 +305,12 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
           rotateX: isDialUp || isClosing ? 70 : 0,
           y: isDialUp || isClosing ? 150 : 0,
           scale: isDialUp || isClosing ? 0.9 : 1,
-          rotateZ: isClosing ? dialSpin + 2160 : dialSpin,
+          rotateZ: isSpinning ? dialSpin + 2160 : dialSpin,
         }}
         transition={
-          isClosing
+          isSpinning
             ? {
-                rotateZ: { duration: 4, ease: "easeInOut" },
+                rotateZ: { duration: 3, ease: "easeInOut" },
                 default: { type: "spring", stiffness: 100, damping: 20 },
               }
             : {
@@ -311,7 +320,11 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
               }
         }
         className={`relative w-56 h-56 rounded-full bg-zinc-800 border-[12px] border-zinc-700 flex items-center justify-center z-10 transition-shadow duration-500 ${isDialUp ? "shadow-[inset_0_3px_6px_rgba(255,255,255,0.08),inset_0_-4px_10px_rgba(0,0,0,0.7),0_20px_50px_rgba(var(--accent-color),0.3)]" : "shadow-[inset_0_3px_6px_rgba(255,255,255,0.08),inset_0_-4px_10px_rgba(0,0,0,0.7),0_8px_32px_rgba(0,0,0,0.8)]"}`}
-        style={{ transformStyle: "preserve-3d" }}
+        style={{
+          transformStyle: "preserve-3d",
+          WebkitTransformStyle: "preserve-3d",
+          willChange: "transform",
+        }}
       >
         {/* 3D Depth Layers — visible as cylinder edge when tilted */}
         {[...Array(10)].map((_, i) => (
@@ -347,29 +360,33 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
 
         {/* Black Inner Dial background */}
         <div
-          className={`w-[180px] h-[180px] rounded-full border-[8px] flex items-center justify-center relative overflow-hidden transition-all duration-300 ${isClosing ? "border-red-900 bg-red-950 shadow-[inset_0_4px_8px_rgba(255,0,0,0.5)] animate-pulse" : "bg-transparent border-zinc-800 shadow-[inset_0_4px_8px_rgba(0,0,0,0.9),inset_0_-2px_4px_rgba(255,255,255,0.05),0_0_20px_rgba(0,0,0,0.8)]"}`}
+          className={`w-[180px] h-[180px] rounded-full border-[8px] flex items-center justify-center relative overflow-hidden transition-all duration-300 ${isClosing ? "border-red-900 bg-red-950 shadow-[inset_0_4px_8px_rgba(255,0,0,0.5)] animate-pulse" : "bg-zinc-950 border-zinc-800 shadow-[inset_0_4px_8px_rgba(0,0,0,0.9),0_0_20px_rgba(0,0,0,0.8)]"}`}
+          style={{
+            WebkitMaskImage: "-webkit-radial-gradient(white, black)", // Forces Safari to clip correctly
+            isolation: "isolate", // Prevents blend mode artifacts appearing as boxes
+          }}
         >
-          {/* Glowing Base */}
-          {isClosing ? (
-            <motion.div
-              animate={{
-                backgroundColor: ["#ef4444", "#ffffff", "#ef4444"],
-              }}
-              transition={{ repeat: Infinity, duration: 0.2 }}
-              className="absolute w-full h-full"
-            />
-          ) : (
-            <div className="absolute w-full h-full bg-accent" />
-          )}
-
-          {/* Left Black Triangle */}
-          <div
-            className={`absolute -left-1 w-0 h-0 border-t-[82px] border-b-[82px] border-l-[70px] border-transparent transition-colors duration-300 ${isClosing ? "border-l-red-950/80" : "border-l-zinc-950"}`}
-          />
-
-          {/* Right Black Triangle */}
-          <div
-            className={`absolute -right-1 w-0 h-0 border-t-[82px] border-b-[82px] border-r-[70px] border-transparent transition-colors duration-300 ${isClosing ? "border-r-red-950/80" : "border-r-zinc-950"}`}
+          {/* Glowing Base with Phased Shape Transformation */}
+          <motion.div
+            animate={{
+              backgroundColor: isSpinning
+                ? ["#ef4444", "#ffffff", "#ef4444"]
+                : isClosing
+                  ? "#ef4444"
+                  : "rgb(var(--accent-color))",
+              clipPath:
+                isDialUp && !isSpinning
+                  ? "polygon(50% 0%, 50% 0%, 100% 50%, 100% 50%, 50% 100%, 50% 100%, 0% 50%, 0% 50%)" // Diamond (8 pts)
+                  : "polygon(0% 0%, 50% 0%, 100% 0%, 55% 50%, 100% 100%, 50% 100%, 0% 100%, 45% 50%)", // Hourglass (8 pts)
+            }}
+            transition={{
+              backgroundColor: isSpinning
+                ? { repeat: Infinity, duration: 0.2 }
+                : { duration: 0.5 },
+              clipPath: { duration: 1, ease: "easeInOut" }, // Slower and deliberate transformation
+            }}
+            className="absolute w-full h-full"
+            style={{ transform: "translateZ(0)" }}
           />
 
           {/* Core glow when active */}
@@ -379,9 +396,21 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: 1,
-                  backgroundColor: isClosing
-                    ? "#ff0000"
-                    : "rgb(var(--accent-color))",
+                  backgroundColor: isSpinning
+                    ? ["#ff0000", "#ffffff", "#ff0000"]
+                    : isClosing
+                      ? "#ff0000"
+                      : "rgb(var(--accent-color))",
+                  clipPath:
+                    isDialUp && !isSpinning
+                      ? "polygon(50% 0%, 50% 0%, 100% 50%, 100% 50%, 50% 100%, 50% 100%, 0% 50%, 0% 50%)"
+                      : "polygon(0% 0%, 50% 0%, 100% 0%, 55% 50%, 100% 100%, 50% 100%, 0% 100%, 45% 50%)",
+                }}
+                transition={{
+                  backgroundColor: isSpinning
+                    ? { repeat: Infinity, duration: 0.2 }
+                    : { duration: 0.5 },
+                  clipPath: { duration: 1, ease: "easeInOut" },
                 }}
                 exit={{ opacity: 0 }}
                 className="absolute inset-0 mix-blend-screen blur-md z-10"
@@ -526,12 +555,31 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
               className="flex items-center gap-24 pointer-events-auto"
             >
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.2, x: -5 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handlePrev}
-                className="w-12 h-12 bg-zinc-900 border border-accent/50 rounded-full flex items-center justify-center text-accent shadow-[0_0_15px_rgba(var(--accent-color),0.5)] bg-opacity-80 backdrop-blur-md"
+                className="w-12 h-12 flex items-center justify-center text-accent drop-shadow-[0_0_10px_rgba(var(--accent-color),0.6)] transition-all duration-300 pointer-events-auto"
               >
-                ◀
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 4L7 12L15 20"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="butt"
+                  />
+                  <path
+                    d="M19 6V18"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeOpacity="0.3"
+                  />
+                </svg>
               </motion.button>
 
               {/* Close Button / Press Dial Down */}
@@ -545,12 +593,31 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
               </div>
 
               <motion.button
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.2, x: 5 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleNext}
-                className="w-12 h-12 bg-zinc-900 border border-accent/50 rounded-full flex items-center justify-center text-accent shadow-[0_0_15px_rgba(var(--accent-color),0.5)] bg-opacity-80 backdrop-blur-md"
+                className="w-12 h-12 flex items-center justify-center text-accent drop-shadow-[0_0_10px_rgba(var(--accent-color),0.6)] transition-all duration-300 pointer-events-auto"
               >
-                ▶
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9 4L17 12L9 20"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="butt"
+                  />
+                  <path
+                    d="M5 6V18"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeOpacity="0.3"
+                  />
+                </svg>
               </motion.button>
             </motion.div>
           )}
