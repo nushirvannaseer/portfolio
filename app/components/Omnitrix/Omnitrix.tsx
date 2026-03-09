@@ -25,20 +25,81 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDialUp, setIsDialUp] = useState(false);
   const [dialSpin, setDialSpin] = useState(0);
+  const [isClosing, setIsClosing] = useState(false);
+  const [showFlash, setShowFlash] = useState<"white" | "green" | null>(null);
 
   const active = items[activeIndex];
 
+  const triggerHaptic = (type: "activate" | "deactivate" | "click") => {
+    if (
+      typeof window !== "undefined" &&
+      window.navigator &&
+      window.navigator.vibrate
+    ) {
+      if (type === "activate") {
+        // Power up sequence: short, medium, long pulses
+        window.navigator.vibrate([10, 30, 20, 50, 30, 80]);
+      } else if (type === "deactivate") {
+        // Power down sequence: long, medium, short pulses
+        window.navigator.vibrate([80, 40, 50, 20, 30, 10]);
+      } else {
+        // Sharp mechanical click
+        window.navigator.vibrate(12);
+      }
+    }
+  };
+
+  const playSound = (type: "activate" | "deactivate" | "click") => {
+    triggerHaptic(type);
+    try {
+      const src =
+        type === "activate"
+          ? "/sounds/omnitrix-activate.mp3"
+          : type === "deactivate"
+            ? "/sounds/omnitrix-deactivate.mp3"
+            : "/sounds/omnitrix-select.mp3";
+      const audio = new Audio(src);
+      audio.volume = 0.6;
+      audio.play().catch(() => {});
+    } catch (_) {}
+  };
+
   const handleNext = () => {
+    playSound("click");
     setDialSpin((prev) => prev + 90);
     setActiveIndex((prev) => (prev + 1) % items.length);
   };
 
   const handlePrev = () => {
+    playSound("click");
     setDialSpin((prev) => prev - 90);
     setActiveIndex((prev) => (prev - 1 + items.length) % items.length);
   };
 
-  const toggleDial = () => setIsDialUp(!isDialUp);
+  const toggleDial = () => {
+    if (isDialUp) {
+      // Start Closing Sequence
+      setIsClosing(true);
+      playSound("deactivate");
+
+      // Phase 1: Warning (Hologram turns red, starts collapsing) handled by isClosing in JSX
+
+      // Phase 2: Chaos (After 1s, dial starts rapid spin and flash) handled in JSX
+
+      // End Sequence: After 2s, flash green and snap shut
+      setTimeout(() => {
+        setShowFlash("green");
+        setTimeout(() => {
+          setIsDialUp(false);
+          setIsClosing(false);
+          setShowFlash(null);
+        }, 300);
+      }, 3200);
+    } else {
+      playSound("activate");
+      setIsDialUp(true);
+    }
+  };
 
   return (
     <div className="relative flex flex-col items-center justify-center gap-10 py-10 w-full min-h-[500px] perspective-[1000px]">
@@ -57,9 +118,31 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
             <motion.div
               key={activeIndex}
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
+              animate={{
+                opacity: isClosing ? [1, 1, 0] : 1,
+                y: 0,
+                scale: isClosing ? 0.9 : 1,
+                clipPath: isClosing
+                  ? "inset(0 49.5% 0 49.5%)"
+                  : "inset(0 0% 0 0%)",
+              }}
               exit={{ opacity: 0, y: -20, scale: 0.8 }}
-              className="w-full max-w-sm h-[19rem] pt-5 px-5 pb-8 bg-accent/5 border border-accent/40 rounded-xl shadow-[0_0_40px_rgba(var(--accent-color),0.4)] backdrop-blur-md flex flex-col items-start justify-start text-left overflow-hidden pointer-events-auto"
+              transition={
+                isClosing
+                  ? {
+                      clipPath: { duration: 0.8, ease: "easeInOut" },
+                      opacity: { duration: 1.2, times: [0, 0.7, 1] },
+                      scale: { duration: 0.8 },
+                      y: { duration: 0.8 },
+                    }
+                  : { duration: 0.4 }
+              }
+              className={`w-full max-w-sm h-[19rem] pt-5 px-5 pb-8 border rounded-xl shadow-[0_0_40px_rgba(var(--accent-color),0.4)] backdrop-blur-md flex flex-col items-start justify-start text-left overflow-hidden pointer-events-auto transition-colors duration-300 ${isClosing ? "bg-red-950/20 border-red-500/40 shadow-red-900/40" : "bg-accent/5 border-accent/40 shadow-accent/40"}`}
+              style={{
+                ...(isClosing
+                  ? ({ "--accent-color": "239, 68, 68" } as any)
+                  : {}),
+              }}
             >
               {/* One-shot scan line — sweeps top to bottom, reveals card content */}
               <motion.div
@@ -136,14 +219,22 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
             {/* The Hologram Light Beam */}
             <div className="mt-2 relative w-80 h-28">
               {/* Shaped beam */}
-              <div
-                className="absolute h-14 inset-0 bg-gradient-to-t from-accent/30 via-accent/10 to-transparent blur-sm"
-                style={{ clipPath: "polygon(0 0, 100% 0, 65% 100%, 35% 100%)" }}
+              <motion.div
+                animate={{
+                  height: isClosing ? [56, 40, 20, 0] : 56,
+                  clipPath: isClosing
+                    ? "polygon(49% 0, 51% 0, 50% 100%, 50% 100%)"
+                    : "polygon(0 0, 100% 0, 65% 100%, 35% 100%)",
+                }}
+                className={`absolute inset-0 bg-gradient-to-t to-transparent blur-sm transition-colors duration-300 ${isClosing ? "from-red-600/60 via-red-900/20" : "from-accent/30 via-accent/10"}`}
               />
-              {/* Blurry bottom base glow — inner tight glow */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-12 bg-accent/50 blur-3xl rounded-full" />
-              {/* Blurry bottom base glow — outer soft halo */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-8 bg-accent/50 blur-3xl rounded-full" />
+              {/* Blurry bottom base glow */}
+              <div
+                className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-12 blur-3xl rounded-full transition-colors duration-300 ${isClosing ? "bg-red-600/50" : "bg-accent/50"}`}
+              />
+              <div
+                className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-8 blur-3xl rounded-full transition-colors duration-300 ${isClosing ? "bg-red-600/50" : "bg-accent/50"}`}
+              />
             </div>
           </motion.div>
         )}
@@ -172,18 +263,36 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
 
       {/* The Unified 3D Dial */}
       <motion.div
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.01}
+        onDragEnd={(_, info) => {
+          const threshold = 50;
+          if (info.offset.x < -threshold) {
+            handleNext();
+          } else if (info.offset.x > threshold) {
+            handlePrev();
+          }
+        }}
         initial={false}
         animate={{
-          rotateX: isDialUp ? 70 : 0,
-          y: isDialUp ? 150 : 0,
-          scale: isDialUp ? 0.9 : 1,
-          rotateZ: dialSpin,
+          rotateX: isDialUp || isClosing ? 70 : 0,
+          y: isDialUp || isClosing ? 150 : 0,
+          scale: isDialUp || isClosing ? 0.9 : 1,
+          rotateZ: isClosing ? dialSpin + 2160 : dialSpin,
         }}
-        transition={{
-          type: "spring",
-          stiffness: 120,
-          damping: 18,
-        }}
+        transition={
+          isClosing
+            ? {
+                rotateZ: { duration: 4, ease: "easeInOut" },
+                default: { type: "spring", stiffness: 100, damping: 20 },
+              }
+            : {
+                type: "spring",
+                stiffness: 120,
+                damping: 18,
+              }
+        }
         className={`relative w-56 h-56 rounded-full bg-zinc-800 border-[12px] border-zinc-700 flex items-center justify-center z-10 transition-shadow duration-500 ${isDialUp ? "shadow-[inset_0_3px_6px_rgba(255,255,255,0.08),inset_0_-4px_10px_rgba(0,0,0,0.7),0_20px_50px_rgba(var(--accent-color),0.3)]" : "shadow-[inset_0_3px_6px_rgba(255,255,255,0.08),inset_0_-4px_10px_rgba(0,0,0,0.7),0_8px_32px_rgba(0,0,0,0.8)]"}`}
         style={{ transformStyle: "preserve-3d" }}
       >
@@ -220,24 +329,45 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
         />
 
         {/* Black Inner Dial background */}
-        <div className="w-[180px] h-[180px] rounded-full bg-zinc-900 border-[8px] border-zinc-800 flex items-center justify-center relative overflow-hidden shadow-[inset_0_4px_8px_rgba(0,0,0,0.9),inset_0_-2px_4px_rgba(255,255,255,0.05),0_0_20px_rgba(0,0,0,0.8)]">
-          {/* Glowing Green Base */}
-          <div className="absolute w-full h-full bg-accent" />
+        <div
+          className={`w-[180px] h-[180px] rounded-full border-[8px] flex items-center justify-center relative overflow-hidden transition-all duration-300 ${isClosing ? "border-red-900 bg-red-950 shadow-[inset_0_4px_8px_rgba(255,0,0,0.5)] animate-pulse" : "bg-transparent border-zinc-800 shadow-[inset_0_4px_8px_rgba(0,0,0,0.9),inset_0_-2px_4px_rgba(255,255,255,0.05),0_0_20px_rgba(0,0,0,0.8)]"}`}
+        >
+          {/* Glowing Base */}
+          {isClosing ? (
+            <motion.div
+              animate={{
+                backgroundColor: ["#ef4444", "#ffffff", "#ef4444"],
+              }}
+              transition={{ repeat: Infinity, duration: 0.2 }}
+              className="absolute w-full h-full"
+            />
+          ) : (
+            <div className="absolute w-full h-full bg-accent" />
+          )}
 
           {/* Left Black Triangle */}
-          <div className="absolute -left-1 w-0 h-0 border-t-[82px] border-b-[82px] border-l-[70px] border-transparent border-l-zinc-950" />
+          <div
+            className={`absolute -left-1 w-0 h-0 border-t-[82px] border-b-[82px] border-l-[70px] border-transparent transition-colors duration-300 ${isClosing ? "border-l-red-950/80" : "border-l-zinc-950"}`}
+          />
 
           {/* Right Black Triangle */}
-          <div className="absolute -right-1 w-0 h-0 border-t-[82px] border-b-[82px] border-r-[70px] border-transparent border-r-zinc-950" />
+          <div
+            className={`absolute -right-1 w-0 h-0 border-t-[82px] border-b-[82px] border-r-[70px] border-transparent transition-colors duration-300 ${isClosing ? "border-r-red-950/80" : "border-r-zinc-950"}`}
+          />
 
           {/* Core glow when active */}
           <AnimatePresence>
-            {isDialUp && (
+            {(isDialUp || isClosing) && (
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{
+                  opacity: 1,
+                  backgroundColor: isClosing
+                    ? "#ff0000"
+                    : "rgb(var(--accent-color))",
+                }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-accent mix-blend-screen blur-md z-10"
+                className="absolute inset-0 mix-blend-screen blur-md z-10"
               />
             )}
           </AnimatePresence>
@@ -406,6 +536,17 @@ const Omnitrix = ({ items }: OmnitrixProps) => {
                 ▶
               </motion.button>
             </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Final Flash Trigger */}
+        <AnimatePresence>
+          {showFlash && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={`fixed inset-0 z-[100] pointer-events-none ${showFlash === "green" ? "bg-accent shadow-[0_0_200px_inset_rgba(var(--accent-color),0.8)]" : "bg-white"}`}
+            />
           )}
         </AnimatePresence>
       </div>
